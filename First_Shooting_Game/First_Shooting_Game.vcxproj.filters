@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Sequence">
+      <UniqueIdentifier>{e5a5ee46-092b-4cef-8480-4fc75c42b5c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Sequence\Game">
+      <UniqueIdentifier>{b2a77113-ad29-4b3f-9c63-945c3107da1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -21,10 +27,40 @@
     <ClCompile Include="State.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Sequence\Menu.cpp">
+      <Filter>ソース ファイル\Sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Sequence\Parent.cpp">
+      <Filter>ソース ファイル\Sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="Sequence\Title.cpp">
+      <Filter>ソース ファイル\Sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="Sequence\Game\GParent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="State.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence\Menu.h">
+      <Filter>ソース ファイル\Sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence\Parent.h">
+      <Filter>ソース ファイル\Sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence\Title.h">
+      <Filter>ソース ファイル\Sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="Sequence\Game\GParent.h">
+      <Filter>ソース ファイル\Sequence\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,10 +26,12 @@ private:
 	int sizex;
 	int sizey;
 	int imgname;
+	int atarihantei;
+	int direction;	//N:0, L:1, R:2
 
 	int* index = new int[x*y];
 	
-	void drawScreen(int x, int y);
+	void drawScreen(int x, int y, int direction);
 };
 
 #endif

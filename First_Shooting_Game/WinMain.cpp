@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "State.h"
-
+#include "Sequence\Parent.h"
 
 
 // WinMainŠÖ”
@@ -13,17 +13,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	State player('p',400,400);
-	State enemy('e');
+	State gPlayer('p',400,400);
+	State gEnemy('e');
+
 
 	while(CheckHitKey(KEY_INPUT_ESCAPE)!=1){
 		//int Time = GetNowCount();
 		ClearDrawScreen();
 
-		player.update();
-		player.draw();
-		enemy.update();
-		enemy.draw();
+		gPlayer.update();
+		gPlayer.draw();
+		gEnemy.update();
+		gEnemy.draw();
 
 		ScreenFlip();
 		// ‚P‚Vƒ~ƒŠ•b(–ñ•bŠÔ‚U‚OƒtƒŒ[ƒ€‚¾‚Á‚½‚Ì‚PƒtƒŒ[ƒ€‚ ‚½‚è‚ÌŒo‰ßŠÔ)
