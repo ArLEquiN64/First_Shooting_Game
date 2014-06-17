@@ -3,15 +3,15 @@
 
 class Image{
 public:
-	Image();
+	Image(const char* filename);
 	~Image();
 	int width() const;
 	int height() const;
-	void draw() const;
+	void draw(int x=0,int y=0) const;
 private:
+	int mHandle;
 	int mWidth;
 	int mHeight;
-	unsigned* mData;
 };
 
 #endif

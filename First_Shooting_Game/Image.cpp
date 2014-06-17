@@ -1,12 +1,15 @@
 #include "DxLib.h"
 #include "Image.h"
 
-Image::Image(){
-
+Image::Image(const char* filename) :
+mWidth(0),
+mHeight(0){
+	mHandle = LoadGraph(filename);
+	GetGraphSize(mHandle, &mWidth, &mHeight);
 }
 
 Image::~Image(){
-
+	DeleteGraph(mHandle);
 }
 
 int Image::width() const {
@@ -17,6 +20,6 @@ int Image::height() const {
 	return mHeight;
 }
 
-void Image::draw() const {
-
+void Image::draw(int x,int y) const {
+	DrawGraph(x, y, mHandle, true);
 }

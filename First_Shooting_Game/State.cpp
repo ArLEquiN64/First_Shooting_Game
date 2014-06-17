@@ -71,11 +71,15 @@ void State::update(){
 
 }
 
-void State::draw(){
+void State::draw() const{
 	drawScreen(x, y, direction);
 }
 
-void State::drawScreen(int x, int y, int direction){
+void State::reset(){
+
+}
+
+void State::drawScreen(int x, int y, int direction) const{
 	if (s == STATUS_PLAYER){
 		switch (direction){
 		case 0:	DrawRectGraph(x, y, 0, 0, 48, 48, imgname, true, false); break;

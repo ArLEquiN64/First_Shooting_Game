@@ -1,7 +1,7 @@
-#include "Sequence/Parent.h"
-#include "Sequence/Title.h"
-#include "Sequence/Menu.h"
-#include "Sequence/Game/GParent.h"
+#include "Sequence\Parent.h"
+#include "Sequence\Title.h"
+#include "Sequence\Menu.h"
+#include "Sequence\Game\GParent.h"
 
 namespace Sequence{
 

@@ -1,12 +1,12 @@
 #include "DxLib.h"
-#include "Sequence/Title.h"
-#include "Sequence/Parent.h"
+#include "Sequence\Title.h"
+#include "Sequence\Parent.h"
 #include "Image.h"
 
 namespace Sequence{
 
 Title::Title() : mImage(0){
-	mImage = new Image();
+	mImage = new Image("S:/images/First_Shooting_Game_Title.bmp");
 }
 
 Title::~Title(){
@@ -20,7 +20,9 @@ void Title::update(Parent* parent){
 		parent->moveTo(Parent::SEQ_MENU);
 	}
 	//•`‰æ
+	//ClearDrawScreen();
 	mImage->draw();
+	//ScreenFlip();
 }
 
 } //namespace Sequence

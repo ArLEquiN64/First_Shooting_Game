@@ -8,10 +8,10 @@ class Parent;
 
 namespace Game{
 
-//class Clear;
-//class Loading;
-//class Menu;
-//class Play;
+class Clear;
+class Loading;
+class Pause;
+class Play;
 
 class GParent{
 public:
@@ -25,12 +25,21 @@ public:
 
 		SEQ_NONE,
 	};
-
+	GParent();
+	~GParent();
+	void moveTo(SeqID);
 	void update(Parent*);
+	void startLoading();
+	State* state();
 
 private:
 	State* mState;
 	SeqID mNext;
+
+	Play* mPlay;
+	Loading* mLoading;
+	Pause* mPause;
+	Clear* mClear;
 };
 
 }	//namespace Game

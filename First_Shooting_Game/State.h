@@ -10,7 +10,8 @@ public:
 		index = 0; //ポインタに0を入れるのはクセにしよう。
 	}
 	void update();
-	void draw();
+	void draw() const;
+	void reset();
 
 private:
 	enum Status{
@@ -31,7 +32,7 @@ private:
 
 	int* index = new int[x*y];
 	
-	void drawScreen(int x, int y, int direction);
+	void drawScreen(int x, int y, int direction) const;
 };
 
 #endif
