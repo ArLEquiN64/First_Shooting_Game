@@ -1,10 +1,12 @@
 #include "DxLib.h"
-#include "State.h"
 #include "Image.h"
 #include "Sequence\Parent.h"
 
 //グローバル変数
 Sequence::Parent* gRootSequence = 0; //根っこシーケンス
+char gKey[256];		//キーステート
+int gCount = 0;
+bool endRequest = false;	//ゲーム終了フラグ
 
 // WinMain関数
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow){
@@ -16,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	while(true){
+	while (ProcessMessage() == 0 && endRequest == false){
 		//int Time = GetNowCount();
 		ClearDrawScreen();
 
@@ -24,25 +26,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			gRootSequence = new Sequence::Parent();
 		}
 
-		gRootSequence->update();
-/*
-		State gPlayer('p', 400, 400);
-		State gEnemy('e');
+		GetHitKeyStateAll(gKey);
 
-		gPlayer.update();
-		gPlayer.draw();
-		gEnemy.update();
-		gEnemy.draw();
-*/
-		ScreenFlip();
+		gRootSequence->update();
+
 		// １７ミリ秒(約秒間６０フレームだった時の１フレームあたりの経過時間)
 		// 経過するまでここで待つ
 		//while (GetNowCount() - Time < 17){}//終了判定
 
-		if (ProcessMessage() == -1){
-			break;
-		}
+		ScreenFlip();
 	}
+
 	//後処理
 	delete gRootSequence;
 	gRootSequence = 0;

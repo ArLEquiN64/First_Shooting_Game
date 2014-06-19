@@ -85,7 +85,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="E_Shot.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="Sequence\Game\Clear.cpp" />
     <ClCompile Include="Sequence\Game\GParent.cpp" />
     <ClCompile Include="Sequence\Game\Loading.cpp" />
@@ -93,11 +98,17 @@
     <ClCompile Include="Sequence\Game\Play.cpp" />
     <ClCompile Include="Sequence\Parent.cpp" />
     <ClCompile Include="Sequence\Menu.cpp" />
-    <ClCompile Include="State.cpp" />
     <ClCompile Include="Sequence\Title.cpp" />
+    <ClCompile Include="Shot.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scenery.h" />
+    <ClInclude Include="Control.h" />
+    <ClInclude Include="E_Shot.h" />
+    <ClInclude Include="Shot.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Sequence\Game\Clear.h" />
     <ClInclude Include="Sequence\Game\GParent.h" />
     <ClInclude Include="Image.h" />
@@ -106,7 +117,6 @@
     <ClInclude Include="Sequence\Game\Play.h" />
     <ClInclude Include="Sequence\Parent.h" />
     <ClInclude Include="Sequence\Menu.h" />
-    <ClInclude Include="State.h" />
     <ClInclude Include="Sequence\Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

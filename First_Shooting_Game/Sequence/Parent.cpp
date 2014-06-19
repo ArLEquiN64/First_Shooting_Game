@@ -1,3 +1,4 @@
+#include "DxLib.h"
 #include "Sequence\Parent.h"
 #include "Sequence\Title.h"
 #include "Sequence\Menu.h"
@@ -32,7 +33,6 @@ void Parent::update(){
 	else{
 		return;
 	}
-
 	//‘JˆÚ”»’è
 	switch (mNext){
 	case SEQ_MENU:

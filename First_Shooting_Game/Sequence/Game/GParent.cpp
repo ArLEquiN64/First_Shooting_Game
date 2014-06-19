@@ -4,13 +4,13 @@
 #include "Sequence\Game\Pause.h"
 #include "Sequence\Game\Clear.h"
 #include "Sequence\Parent.h"
-#include "State.h"
+#include "Control.h"
 
 namespace Sequence{
 namespace Game{
 
 GParent::GParent() :
-	mState(0),
+	mControl(0),
 	mNext(SEQ_NONE),
 	mClear(0),
 	mLoading(0),
@@ -21,8 +21,8 @@ GParent::GParent() :
 }
 
 GParent::~GParent(){
-	delete mState;
-	mState = 0;
+	delete mControl;
+	mControl = 0;
 	delete mClear;
 	mClear = 0;
 	delete mLoading;
@@ -78,15 +78,16 @@ void GParent::update(Parent* parent){
 	mNext = SEQ_NONE;
 }
 
-void GParent::startLoading(){
+void GParent::startLoading() {
+	mControl = new Control();
 }
 
 void GParent::moveTo(SeqID next){
 	mNext = next;
 }
 
-State* GParent::state(){
-	return mState;
+Control* GParent::control() {
+	return mControl;
 }
 
 }	//namespace game

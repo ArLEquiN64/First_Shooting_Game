@@ -1,7 +1,7 @@
 #include "Sequence\Game\Clear.h"
 #include "Sequence\Game\GParent.h"
 #include "Image.h"
-#include "State.h"
+#include "Control.h"
 
 namespace Sequence{
 namespace Game{
@@ -22,7 +22,7 @@ void Clear::update(GParent* parent){
 
 	//•`‰æ
 	//‚Ü‚¸ƒQ[ƒ€‰æ–Ê‚ğ•`‰æ
-	parent->state()->draw();
+	parent->control()->draw();
 	//ã‚Éj‚¢‚ÌƒƒbƒZ[ƒW‚ğ•`‰æ
 	mImage->draw();
 

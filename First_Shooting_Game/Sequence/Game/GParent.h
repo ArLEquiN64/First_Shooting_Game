@@ -1,7 +1,7 @@
 #ifndef INCLUDED_SEQUENCE_GAME_PARENT_H
 #define INCLUDED_SEQUENCE_GAME_PARENT_H
 
-class State;
+class Control;
 
 namespace Sequence{
 class Parent;
@@ -30,10 +30,10 @@ public:
 	void moveTo(SeqID);
 	void update(Parent*);
 	void startLoading();
-	State* state();
+	Control* control();
 
 private:
-	State* mState;
+	Control* mControl;
 	SeqID mNext;
 
 	Play* mPlay;

@@ -16,13 +16,10 @@ Title::~Title(){
 
 void Title::update(Parent* parent){
 	//“ü—ÍŽæ“¾
-	if (CheckHitKey(KEY_INPUT_SPACE)){
-		parent->moveTo(Parent::SEQ_MENU);
-	}
+	if (gKey[KEY_INPUT_SPACE]){	parent->moveTo(Parent::SEQ_MENU); }
+	if (gKey[KEY_INPUT_ESCAPE]){ endRequest = true; }
 	//•`‰æ
-	//ClearDrawScreen();
 	mImage->draw();
-	//ScreenFlip();
 }
 
 } //namespace Sequence

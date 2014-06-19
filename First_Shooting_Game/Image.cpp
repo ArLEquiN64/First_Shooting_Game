@@ -23,3 +23,7 @@ int Image::height() const {
 void Image::draw(int x,int y) const {
 	DrawGraph(x, y, mHandle, true);
 }
+
+void Image::draw(int x, int y, int srcX, int srcY, int width, int height) {
+	DrawRectGraph(x, y, srcX, srcY, width, height, mHandle, true, false);
+}

@@ -1,6 +1,9 @@
 #ifndef INCLUDED_SEQUENCE_GAME_PAUSE_H
 #define INCLUDED_SEQUENCE_GAME_PAUSE_H
 
+//グローバル変数
+extern char gKey[256];		//キーステート
+
 class Image;
 
 namespace Sequence{
