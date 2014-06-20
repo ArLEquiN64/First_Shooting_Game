@@ -5,6 +5,11 @@
 #include "Sequence\Game\Clear.h"
 #include "Sequence\Parent.h"
 #include "Control.h"
+#include "Scenery.h"
+#include "Player.h"
+#include "Enemy.h"
+
+extern int gCount;
 
 namespace Sequence{
 namespace Game{
@@ -79,7 +84,8 @@ void GParent::update(Parent* parent){
 }
 
 void GParent::startLoading() {
-	mControl = new Control();
+	mControl = new Control;
+	gCount = 0;
 }
 
 void GParent::moveTo(SeqID next){

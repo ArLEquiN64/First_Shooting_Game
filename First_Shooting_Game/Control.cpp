@@ -3,10 +3,13 @@
 #include "Player.h"
 #include "Enemy.h"
 
+extern int gCount;
+
 Control::Control() {
 	mScenery = new Scenery();
 	mPlayer = new Player();
 	mEnemy = new Enemy();
+
 }
 
 Control::~Control() {
@@ -34,4 +37,5 @@ void Control::reset() {
 	mScenery = new Scenery();
 	mPlayer = new Player();
 	mEnemy = new Enemy();
+	gCount = 0;
 }

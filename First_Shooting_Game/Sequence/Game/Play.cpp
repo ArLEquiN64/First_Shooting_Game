@@ -9,7 +9,6 @@ namespace Sequence{
 namespace Game{
 
 Play::Play() {
-	gCount = 0;
 }
 
 Play::~Play(){

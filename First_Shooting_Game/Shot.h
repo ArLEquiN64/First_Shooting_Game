@@ -22,7 +22,7 @@ public:
 	void draw();
 
 private:
-	SHOT shot[BULLET];
+	SHOT mShot[BULLET];
 
 	Image* mImage;
 };

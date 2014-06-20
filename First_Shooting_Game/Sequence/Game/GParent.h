@@ -2,6 +2,9 @@
 #define INCLUDED_SEQUENCE_GAME_PARENT_H
 
 class Control;
+class Scenery;
+class Player;
+class Enemy;
 
 namespace Sequence{
 class Parent;
@@ -34,6 +37,9 @@ public:
 
 private:
 	Control* mControl;
+	Scenery* mScenery;
+	Player* mPlayer;
+	Enemy* mEnemy;
 	SeqID mNext;
 
 	Play* mPlay;

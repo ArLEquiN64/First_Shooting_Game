@@ -7,7 +7,7 @@ Player::Player() :mImage(0){
 	mImage = new Image("S:/images/KMAP弾幕風素材/自機素材/Reisen.png");
 	mHitArea = new Image("S:/images/KMAP弾幕風素材/自機素材/atarihantei.png");
 	mShot = new Shot();
-	mX = 400 - 21;
+	mX = 300 - 21;
 	mY = 350;
 }
 
@@ -31,7 +31,7 @@ void Player::update() {
 	int tx = mX + dx;
 	int ty = mY + dy;
 	//座標の最大最小チェック。外れていれば不許可
-	if (tx < -21 || tx >= 800 - 27) { tx = mX; }
+	if (tx < -21 || tx >= 600 - 27) { tx = mX; }
 	if (ty < -21 || ty >= 600 - 27) { ty = mY; }
 	mX = tx;
 	mY = ty;

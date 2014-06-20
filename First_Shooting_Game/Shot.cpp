@@ -5,7 +5,7 @@
 Shot::Shot() {
 	mImage = new Image("S:/images/KMAP弾幕風素材/夢終劇ドット絵/shot_all.png");
 	for (int i = 0; i < BULLET; i++) {
-		shot[i].live = false;
+		mShot[i].live = false;
 	}
 }
 
@@ -18,10 +18,10 @@ void Shot::update(int x, int y) {
 	//弾発射
 	if (gKey[KEY_INPUT_J]) {
 		for (int i = 0; i < BULLET; i++) {
-			if (shot[i].live == false) {
-				shot[i].live = true;
-				shot[i].x = x;
-				shot[i].y = y;
+			if (mShot[i].live == false) {
+				mShot[i].live = true;
+				mShot[i].x = x;
+				mShot[i].y = y;
 				break;
 			}
 		}
@@ -29,12 +29,12 @@ void Shot::update(int x, int y) {
 
 	//弾移動
 	for (int i = 0; i < BULLET; i++) {
-		if (shot[i].live) {
-			shot[i].y -= 16;
+		if (mShot[i].live) {
+			mShot[i].y -= 16;
 
 			//画面外判定
-			if (shot[i].y < -128) {
-				shot[i].live = false;
+			if (mShot[i].y < -128) {
+				mShot[i].live = false;
 			}
 		}
 
@@ -43,6 +43,6 @@ void Shot::update(int x, int y) {
 
 void Shot::draw() {
 	for (int i = 0; i < BULLET; i++) {
-		if (shot[i].live == true) { mImage->draw(shot[i].x, shot[i].y, 96, 80, 16, 16); }
+		if (mShot[i].live == true) { mImage->draw(mShot[i].x, mShot[i].y, 96, 80, 16, 16); }
 	}
 }
