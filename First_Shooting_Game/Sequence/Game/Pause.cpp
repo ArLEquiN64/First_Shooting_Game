@@ -8,7 +8,7 @@ namespace Sequence{
 namespace Game{
 
 Pause::Pause() : mImage(0){
-	mImage = new Image("S:/Images/Pause.png");
+	mImage = new Image("S:/materials/Images/Pause.png");
 }
 
 Pause::~Pause(){

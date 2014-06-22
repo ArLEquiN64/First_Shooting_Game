@@ -2,6 +2,7 @@
 #include "Scenery.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "DeathJudge.h"
 
 extern int gCount;
 
@@ -9,7 +10,10 @@ Control::Control() {
 	mScenery = new Scenery();
 	mPlayer = new Player();
 	mEnemy = new Enemy();
-
+	E_shotFlag = false;
+	P_shotFlag = false;/*
+	P_shotSound = LoadSoundMem("S:/images/SE v0.20/shot1.wav");
+	E_shotSound = LoadSoundMem("S:/images/SE v0.20/shot2.wav");*/
 }
 
 Control::~Control() {
@@ -21,10 +25,19 @@ Control::~Control() {
 	mEnemy = 0;
 }
 
+Player* Control::player(){
+	return mPlayer;
+}
+
+Enemy* Control::enemy(){
+	return mEnemy;
+}
+
 void Control::update() {
 	mScenery->update();
 	mPlayer->update();
 	mEnemy->update();
+	mJudge->update(mPlayer,mEnemy);
 }
 
 void Control::draw(){

@@ -11,7 +11,7 @@ Loading::Loading() :
 	mImage(0),
 	mCount(0),
 	mStarted(false){
-	mImage = new Image("S:/images/Loading.png");
+	mImage = new Image("S:/materials/images/Loading.png");
 }
 
 Loading::~Loading(){
@@ -19,7 +19,10 @@ Loading::~Loading(){
 	mImage = 0;
 }
 
-void Loading::update(GParent* parent){
+void Loading::update(GParent* parent) {
+	//•`‰æ
+	mImage->draw();
+
 	if (!mStarted){
 		//Œ‹‹Çƒ[ƒh‚·‚é‚Ì‚ÍeB‚È‚º‚È‚çState‚ðŽ‚Á‚Ä‚¢‚é‚Ì‚Íe‚¾‚©‚çB
 		parent->startLoading();
@@ -28,9 +31,6 @@ void Loading::update(GParent* parent){
 	else if (mCount == 60){	//1•b‘Ò‚Â
 		parent->moveTo(GParent::SEQ_PLAY);	//Play‚ÉˆÚ“®
 	}
-
-	//•`‰æ
-	mImage->draw();
 
 	++mCount;
 }

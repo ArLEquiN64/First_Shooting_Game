@@ -6,11 +6,11 @@
 class File {
 public:
 	void loadStageData();
-	ENEMY storeStageData(int i);
+	ENEMY* storeStageData(int i);
 	int enemyNum();
 
 private:
-	ENEMY mStageData[ENEMY_NUM];
+	ENEMY** mStageData;
 	int row;
 };
 

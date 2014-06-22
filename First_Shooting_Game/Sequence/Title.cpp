@@ -6,7 +6,7 @@
 namespace Sequence{
 
 Title::Title() : mImage(0){
-	mImage = new Image("S:/images/First_Shooting_Game_Title.bmp");
+	mImage = new Image("image/Title.bmp");
 }
 
 Title::~Title(){

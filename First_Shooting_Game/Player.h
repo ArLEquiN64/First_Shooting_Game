@@ -13,16 +13,20 @@ public:
 	~Player();
 	void update();
 	void draw();
+	void getState(bool* live, double* px, double* py) { *px = mX; *py = mY; *live = mLive; };
+	void getShotState(int i, bool* psLive, double* psx, double* psy);
+	void setDeath() { mLive = false; };
+	void setShotDeath(int i);
 
 private:
-	int mX;
-	int mY;
+	double mX;
+	double mY;
 	int mWidth;
 	int mHeight;
 	int mHitAreaSize;
 	int mDirection;	//N:0, L:1, R:2
 
-	bool mDeath;
+	bool mLive;
 	int mLife;
 
 	Image* mImage;

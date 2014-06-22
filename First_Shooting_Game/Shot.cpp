@@ -2,8 +2,11 @@
 #include "Image.h"
 #include "Shot.h"
 
+extern int gCount;
+
 Shot::Shot() {
-	mImage = new Image("S:/images/KMAP’e–‹•—‘fÞ/–²IŒ€ƒhƒbƒgŠG/shot_all.png");
+	mImage = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/pl_shot.png");
+	mImage->setDivGraph(32, 128, 16, 64, 2, 1);
 	for (int i = 0; i < BULLET; i++) {
 		mShot[i].live = false;
 	}
@@ -16,12 +19,13 @@ Shot::~Shot() {
 
 void Shot::update(int x, int y) {
 	//’e”­ŽË
-	if (gKey[KEY_INPUT_J]) {
+	if (gKey[KEY_INPUT_J] && gCount % 1 == 0) {
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false) {
 				mShot[i].live = true;
 				mShot[i].x = x;
 				mShot[i].y = y;
+
 				break;
 			}
 		}
@@ -30,19 +34,17 @@ void Shot::update(int x, int y) {
 	//’eˆÚ“®
 	for (int i = 0; i < BULLET; i++) {
 		if (mShot[i].live) {
-			mShot[i].y -= 16;
-
-			//‰æ–ÊŠO”»’è
-			if (mShot[i].y < -128) {
-				mShot[i].live = false;
-			}
+			mShot[i].y -= 32;
 		}
-
+		//‰æ–ÊŠO”»’è
+		if (mShot[i].y < -mImage->height()) {
+			mShot[i].live = false;
+		}
 	}
 }
 
 void Shot::draw() {
 	for (int i = 0; i < BULLET; i++) {
-		if (mShot[i].live == true) { mImage->draw(mShot[i].x, mShot[i].y, 96, 80, 16, 16); }
+		if (mShot[i].live == true) { mImage->rotationDraw(mShot[i].x, mShot[i].y, 0); }
 	}
 }

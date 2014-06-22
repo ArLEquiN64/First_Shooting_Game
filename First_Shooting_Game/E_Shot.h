@@ -18,6 +18,7 @@ public:
 	void fire(int x, int y);
 	void update();
 	void draw();
+	E_SHOT getState(int i) { return shot[i]; };
 
 private:
 	E_SHOT shot[BULLET];

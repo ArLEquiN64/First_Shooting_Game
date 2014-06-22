@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DeathJudge.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="E_Shot.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DeathJudge.h" />
     <ClInclude Include="File.h" />
     <ClInclude Include="Scenery.h" />
     <ClInclude Include="Control.h" />
@@ -122,7 +124,13 @@
     <ClInclude Include="Sequence\Title.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="StageData.csv" />
+    <None Include="data\StageData.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\Title.bmp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+    </Image>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

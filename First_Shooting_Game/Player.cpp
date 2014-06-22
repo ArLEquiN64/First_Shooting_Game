@@ -2,12 +2,17 @@
 #include "Image.h"
 #include "Player.h"
 #include "Shot.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+extern int gCount;
 
 Player::Player() :mImage(0){
-	mImage = new Image("S:/images/KMAP弾幕風素材/自機素材/Reisen.png");
-	mHitArea = new Image("S:/images/KMAP弾幕風素材/自機素材/atarihantei.png");
+	mImage = new Image("S:/materials/images/東方風素材/自機/pl00_th14.png");
+	mImage->setDivGraph(0,0,32,48,8,3);
+	mHitArea = new Image("S:/materials/images/東方風素材/自機/Effectelse.png",0.25);
 	mShot = new Shot();
-	mX = 300 - 21;
+	mX = 300;
 	mY = 350;
 }
 
@@ -16,6 +21,14 @@ Player::~Player(){
 	mImage = 0;
 	delete mHitArea;
 	mHitArea = 0;
+}
+
+void Player::getShotState(int i, bool* psLive, double* psx, double* psy) {
+	*psLive = mShot->state(i).live; *psx = mShot->state(i).x; *psy = mShot->state(i).y;
+}
+
+void Player::setShotDeath(int i) {
+	mShot->setDeath(i);
 }
 
 void Player::update() {
@@ -31,8 +44,8 @@ void Player::update() {
 	int tx = mX + dx;
 	int ty = mY + dy;
 	//座標の最大最小チェック。外れていれば不許可
-	if (tx < -21 || tx >= 600 - 27) { tx = mX; }
-	if (ty < -21 || ty >= 600 - 27) { ty = mY; }
+	if (tx < 3 || tx >= 600 - 3) { tx = mX; }
+	if (ty < 3 || ty >= 600 - 3) { ty = mY; }
 	mX = tx;
 	mY = ty;
 
@@ -40,7 +53,7 @@ void Player::update() {
 	if (dx < 0) { mDirection = 1; }
 	if (dx > 0) { mDirection = 2; }
 
-	mShot->update(mX+16,mY+16);
+	mShot->update(mX,mY);
 }
 
 void Player::draw(){
@@ -50,9 +63,10 @@ void Player::draw(){
 
 void Player::drawScreen(int x, int y, int direction) const {
 	switch (direction) {
-	case 0:	mImage->draw(x, y, 0, 0, 48, 48); break;
-	case 1:	mImage->draw(x, y, 48, 0, 48, 48); break;
-	case 2:	mImage->draw(x, y, 96, 0, 48, 48); break;
+	case 0:	mImage->rotationDraw(x, y, 0); break;
+	case 1:	mImage->rotationDraw(x, y, 8); break;
+	case 2:	mImage->rotationDraw(x, y, 16); break;
 	}
-	mHitArea->draw(x + 12, y + 12);
+	mHitArea->rotationDraw(x, y, 0, (M_PI / 60)*(gCount % 120));
+	mHitArea->rotationDraw(x, y, 0, -(M_PI / 60)*(gCount % 120));
 }

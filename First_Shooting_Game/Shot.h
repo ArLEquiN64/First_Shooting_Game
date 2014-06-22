@@ -20,10 +20,12 @@ public:
 	~Shot();
 	void update(int x,int y);
 	void draw();
+	SHOT state(int i){return mShot[i];};
+	void setDeath(int i) { mShot[i].live = false; };
 
 private:
 	SHOT mShot[BULLET];
-
+	
 	Image* mImage;
 };
 

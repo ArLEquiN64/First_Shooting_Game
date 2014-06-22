@@ -2,7 +2,7 @@
 #include "Image.h"
 
 Scenery::Scenery() : x(0),y(0) {
-	mImage = new Image("S:/images/”wŒi.png");
+	mImage = new Image("S:/materials/images/”wŒi.png");
 	mHeight = mImage->height();
 }
 

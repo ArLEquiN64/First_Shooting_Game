@@ -6,7 +6,7 @@
 namespace Sequence{
 
 Menu::Menu() : mImage(0){
-	mImage = new Image("S:/images/Menu.png");
+	mImage = new Image("S:/materials/images/Menu.png");
 }
 
 Menu::~Menu(){

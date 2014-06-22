@@ -4,6 +4,7 @@
 #define ENEMY_NUM 10	//あとでなんとかする
 
 class Image;
+class File;
 class E_Shot;
 
 struct ENEMY {
@@ -17,8 +18,8 @@ struct ENEMY {
 	int mStayTime;			//滞在時間
 	int mShotTime;			//弾発射開始時間
 	int mShootingTime;		//弾発射時間
-	int mX;					//x座標
-	int mY;					//y座標
+	double mX;					//x座標
+	double mY;					//y座標
 	int mHp;				//体力
 	int mItem;				//アイテム
 
@@ -39,10 +40,16 @@ public:
 	~Enemy();
 	void update();
 	void draw();
+	int enemyNum(){return mEnemyNum;};
+	void getState(int i, bool* eLive, double* eX, double* eY) {
+		*eLive = mEnemy[i]->mLive; *eX = mEnemy[i]->mX; *eY = mEnemy[i]->mY;
+	};
+	void getShotState(int eNum, int i, bool*  esLive, double* esx, double* esy);
+	void setDamage(int i, int damage) { mEnemy[i]->mHp -= damage; };
 
 private:
 	int mEnemyNum;
-	ENEMY mEnemy[ENEMY_NUM];
+	ENEMY** mEnemy;
 
 	void move(int i);
 	bool checkOutOfField(int i);
