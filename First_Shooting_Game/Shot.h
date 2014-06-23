@@ -24,7 +24,7 @@ public:
 	void setDeath(int i) { mShot[i].live = false; };
 
 private:
-	SHOT mShot[BULLET];
+	SHOT* mShot;
 	
 	Image* mImage;
 };

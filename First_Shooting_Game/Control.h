@@ -2,6 +2,7 @@
 #define INCLUDED_CONTROL_H
 
 class Scenery;
+class Info;
 class Player;
 class Enemy;
 class DeathJudge;
@@ -16,11 +17,9 @@ public:
 	void draw();
 	void reset();
 
-	Player* player();
-	Enemy* enemy();
-
 private:
 	Scenery* mScenery;
+	Info* mInfo;
 	Player* mPlayer;
 	Enemy* mEnemy;
 	DeathJudge* mJudge;

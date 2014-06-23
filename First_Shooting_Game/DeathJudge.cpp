@@ -15,12 +15,25 @@ void DeathJudge::update(Player* player, Enemy* enemy) {
 
 	for (int psi = 0; psi < 128; psi++) {
 		player->getShotState(psi, &pslive, &psx, &psy);
-		if (pslive = true) {
+		if (pslive == true) {
 			for (int ei = 0; ei < enemy->enemyNum(); ei++) {
 				enemy->getState(ei, &elive, &ex, &ey);
-				if (elive = true && circleCollision(P_S_R, psx, psy, E_R, ex, ey)) {
+				if (elive == true && circleCollision(P_S_R, psx, psy, E_R, ex, ey)) {
 					enemy->setDamage(ei, 1);
 					player->setShotDeath(psi);
+				}
+			}
+		}
+	}
+
+	for (int eNum = 0; eNum < enemy->enemyNum(); eNum++) {
+		for (int esi = 0; esi < 128; esi++) {
+			enemy->getShotState(eNum, esi, &eslive, &esx, &esy);
+			if (eslive == true) {
+				player->getState(&plive, &px, &py);
+				if (plive == true && circleCollision(E_S_R, esx, esy, P_R, px, py)) {
+					player->setDeath();
+					enemy->setShotDeath(eNum, esi);
 				}
 			}
 		}

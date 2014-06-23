@@ -7,6 +7,7 @@ extern int gCount;
 Shot::Shot() {
 	mImage = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/pl_shot.png");
 	mImage->setDivGraph(32, 128, 16, 64, 2, 1);
+	mShot = new SHOT[BULLET];
 	for (int i = 0; i < BULLET; i++) {
 		mShot[i].live = false;
 	}

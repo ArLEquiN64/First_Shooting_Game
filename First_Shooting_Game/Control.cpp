@@ -1,5 +1,6 @@
 #include "Control.h"
 #include "Scenery.h"
+#include "Info.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "DeathJudge.h"
@@ -8,6 +9,7 @@ extern int gCount;
 
 Control::Control() {
 	mScenery = new Scenery();
+	mInfo = new Info();
 	mPlayer = new Player();
 	mEnemy = new Enemy();
 	E_shotFlag = false;
@@ -19,22 +21,17 @@ Control::Control() {
 Control::~Control() {
 	delete mScenery;
 	mScenery = 0;
+	delete mInfo;
+	mInfo = 0;
 	delete mPlayer;
 	mPlayer = 0;
 	delete mEnemy;
 	mEnemy = 0;
 }
 
-Player* Control::player(){
-	return mPlayer;
-}
-
-Enemy* Control::enemy(){
-	return mEnemy;
-}
-
 void Control::update() {
 	mScenery->update();
+	mInfo->update(mPlayer);
 	mPlayer->update();
 	mEnemy->update();
 	mJudge->update(mPlayer,mEnemy);
@@ -42,12 +39,14 @@ void Control::update() {
 
 void Control::draw(){
 	mScenery->draw();
+	mInfo->draw();
 	mPlayer->draw();
 	mEnemy->draw();
 }
 
 void Control::reset() {
 	mScenery = new Scenery();
+	mInfo = new Info();
 	mPlayer = new Player();
 	mEnemy = new Enemy();
 	gCount = 0;

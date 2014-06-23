@@ -7,8 +7,9 @@
 E_Shot::E_Shot() {
 	mImage = new Image("S:/materials/images/niconi-commons/niconicommons_only/nc89509.png",0.6);
 	mImage->setDivGraph(0,0,32,32,16,12);
+	mShot = new E_SHOT[BULLET];
 	for (int i = 0; i < BULLET; i++) {
-		shot[i].live = false;
+		mShot[i].live = false;
 	}
 }
 
@@ -20,10 +21,10 @@ E_Shot::~E_Shot() {
 void E_Shot::fire(int x, int y) {
 	//’e”­ŽË
 	for (int i = 0; i < BULLET; i++) {
-		if (shot[i].live == false) {
-			shot[i].live = true;
-			shot[i].x = x;
-			shot[i].y = y;
+		if (mShot[i].live == false) {
+			mShot[i].live = true;
+			mShot[i].x = x;
+			mShot[i].y = y;
 			break;
 		}
 	}
@@ -32,12 +33,12 @@ void E_Shot::fire(int x, int y) {
 void E_Shot::update() {
 	//’eˆÚ“®
 	for (int i = 0; i < BULLET; i++) {
-		if (shot[i].live) {
-			shot[i].y += 4;
+		if (mShot[i].live) {
+			mShot[i].y += 4;
 
 			//‰æ–ÊŠO”»’è
-			if (shot[i].y > 800) {
-				shot[i].live = false;
+			if (mShot[i].y > 800) {
+				mShot[i].live = false;
 			}
 		}
 
@@ -46,6 +47,6 @@ void E_Shot::update() {
 
 void E_Shot::draw() {
 	for (int i = 0; i < BULLET; i++) {
-		if (shot[i].live == true) { mImage->rotationDraw(shot[i].x, shot[i].y, 18, M_PI); }
+		if (mShot[i].live == true) { mImage->rotationDraw(mShot[i].x, mShot[i].y, 18, M_PI); }
 	}
 }

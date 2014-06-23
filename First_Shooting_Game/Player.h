@@ -14,9 +14,9 @@ public:
 	void update();
 	void draw();
 	void getState(bool* live, double* px, double* py) { *px = mX; *py = mY; *live = mLive; };
-	void getShotState(int i, bool* psLive, double* psx, double* psy);
+	void getShotState(int sNum, bool* psLive, double* psx, double* psy);
 	void setDeath() { mLive = false; };
-	void setShotDeath(int i);
+	void setShotDeath(int sNum);
 
 private:
 	double mX;
@@ -27,7 +27,7 @@ private:
 	int mDirection;	//N:0, L:1, R:2
 
 	bool mLive;
-	int mLife;
+	int mLife = 5;
 
 	Image* mImage;
 	Image* mHitArea;

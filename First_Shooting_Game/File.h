@@ -5,12 +5,16 @@
 
 class File {
 public:
+	~File() {
+		delete[] mStageData;
+		mStageData = 0;
+	};
 	void loadStageData();
-	ENEMY* storeStageData(int i);
+	ENEMY* storeStageData();
 	int enemyNum();
 
 private:
-	ENEMY** mStageData;
+	ENEMY* mStageData;
 	int row;
 };
 

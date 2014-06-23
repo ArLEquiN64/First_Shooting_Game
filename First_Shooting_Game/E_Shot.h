@@ -18,10 +18,11 @@ public:
 	void fire(int x, int y);
 	void update();
 	void draw();
-	E_SHOT getState(int i) { return shot[i]; };
+	E_SHOT getState(int i) { return mShot[i]; };
+	void setDeath(int sNum) { mShot[sNum].live = false; };
 
 private:
-	E_SHOT shot[BULLET];
+	E_SHOT* mShot;
 
 	Image* mImage;
 };

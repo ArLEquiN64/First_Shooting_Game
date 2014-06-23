@@ -7,10 +7,10 @@
 
 extern int gCount;
 
-Player::Player() :mImage(0){
+Player::Player() :mLive(true), mImage(0) {
 	mImage = new Image("S:/materials/images/東方風素材/自機/pl00_th14.png");
-	mImage->setDivGraph(0,0,32,48,8,3);
-	mHitArea = new Image("S:/materials/images/東方風素材/自機/Effectelse.png",0.25);
+	mImage->setDivGraph(0, 0, 32, 48, 8, 3);
+	mHitArea = new Image("S:/materials/images/東方風素材/自機/Effectelse.png", 0.25);
 	mShot = new Shot();
 	mX = 300;
 	mY = 350;
@@ -23,35 +23,40 @@ Player::~Player(){
 	mHitArea = 0;
 }
 
-void Player::getShotState(int i, bool* psLive, double* psx, double* psy) {
-	*psLive = mShot->state(i).live; *psx = mShot->state(i).x; *psy = mShot->state(i).y;
+void Player::getShotState(int sNum, bool* psLive, double* psx, double* psy) {
+	*psLive = mShot->state(sNum).live; *psx = mShot->state(sNum).x; *psy = mShot->state(sNum).y;
 }
 
-void Player::setShotDeath(int i) {
-	mShot->setDeath(i);
+void Player::setShotDeath(int sNum) {
+	mShot->setDeath(sNum);
 }
 
 void Player::update() {
-	//移動量
-	int dx = 0;
-	int dy = 0;
-	if (gKey[KEY_INPUT_A] == 0 && gKey[KEY_INPUT_D] == 1) { dx = 2; }
-	if (gKey[KEY_INPUT_A] == 1 && gKey[KEY_INPUT_D] == 0) { dx = -2; }
-	if (gKey[KEY_INPUT_W] == 0 && gKey[KEY_INPUT_S] == 1) { dy = 2; }
-	if (gKey[KEY_INPUT_W] == 1 && gKey[KEY_INPUT_S] == 0) { dy = -2; }
-	if (gKey[KEY_INPUT_SPACE] == 0) { dx *= 2; dy *= 2; }	//Spaceキーで速度半減
-	//移動後座標
-	int tx = mX + dx;
-	int ty = mY + dy;
-	//座標の最大最小チェック。外れていれば不許可
-	if (tx < 3 || tx >= 600 - 3) { tx = mX; }
-	if (ty < 3 || ty >= 600 - 3) { ty = mY; }
-	mX = tx;
-	mY = ty;
+	if (mLive == true) {
+		//移動量
+		int dx = 0;
+		int dy = 0;
+		if (gKey[KEY_INPUT_A] == 0 && gKey[KEY_INPUT_D] == 1) { dx = 2; }
+		if (gKey[KEY_INPUT_A] == 1 && gKey[KEY_INPUT_D] == 0) { dx = -2; }
+		if (gKey[KEY_INPUT_W] == 0 && gKey[KEY_INPUT_S] == 1) { dy = 2; }
+		if (gKey[KEY_INPUT_W] == 1 && gKey[KEY_INPUT_S] == 0) { dy = -2; }
+		if (gKey[KEY_INPUT_SPACE] == 0) { dx *= 3; dy *= 3; }	//Spaceキーで速度半減
+		//移動後座標
+		int tx = mX + dx;
+		int ty = mY + dy;
+		//座標の最大最小チェック。外れていれば不許可
+		if (tx < 3 || tx >= 600 - 3) { tx = mX; }
+		if (ty < 3 || ty >= 600 - 3) { ty = mY; }
+		mX = tx;
+		mY = ty;
 
-	if (dx == 0) { mDirection = 0; }
-	if (dx < 0) { mDirection = 1; }
-	if (dx > 0) { mDirection = 2; }
+		if (dx == 0) { mDirection = 0; }
+		if (dx < 0) { mDirection = 1; }
+		if (dx > 0) { mDirection = 2; }
+	}
+	else if (mLive == false && mLife > 0) {
+		mLife -= 1;
+	}
 
 	mShot->update(mX,mY);
 }

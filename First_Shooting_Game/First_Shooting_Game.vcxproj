@@ -91,6 +91,7 @@
     <ClCompile Include="E_Shot.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Info.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scenery.cpp" />
     <ClCompile Include="Sequence\Game\Clear.cpp" />
@@ -102,11 +103,13 @@
     <ClCompile Include="Sequence\Menu.cpp" />
     <ClCompile Include="Sequence\Title.cpp" />
     <ClCompile Include="Shot.cpp" />
+    <ClCompile Include="StringRenderer.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeathJudge.h" />
     <ClInclude Include="File.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="Scenery.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="E_Shot.h" />
@@ -122,6 +125,7 @@
     <ClInclude Include="Sequence\Parent.h" />
     <ClInclude Include="Sequence\Menu.h" />
     <ClInclude Include="Sequence\Title.h" />
+    <ClInclude Include="StringRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\StageData.csv" />

@@ -11,10 +11,9 @@ Enemy::Enemy() {
 	file = new File;
 	file->loadStageData();
 	mEnemyNum = file->enemyNum();
-	mEnemy = new ENEMY*[ENEMY_NUM];
+	mEnemy = new ENEMY[mEnemyNum];
+	mEnemy = file->storeStageData();
 	for (int i = 0; i < mEnemyNum; i++) {
-		mEnemy[i] = new ENEMY;
-		mEnemy[i] = file->storeStageData(i);
 		//mEnemy[i].mType = data.mType;						//éÌóﬁ
 		//mEnemy[i].mBulletType = data.mBulletType;			//íeéÌóﬁ
 		//mEnemy[i].mBulletSpeed = data.mBulletSpeed;		//íeë¨ìx
@@ -29,72 +28,73 @@ Enemy::Enemy() {
 		//mEnemy[i].mHp = data.mHp;							//ëÃóÕ
 		//mEnemy[i].mItem = data.mItem;						//ÉAÉCÉeÉÄ
 
-		mEnemy[i]->mHitArea = 0;								//ìñÇΩÇËîªíË
-		mEnemy[i]->mDirection = 0;							//N:0, L:1, R:2
+		mEnemy[i].mHitArea = 0;								//ìñÇΩÇËîªíË
+		mEnemy[i].mDirection = 0;							//N:0, L:1, R:2
 
-		mEnemy[i]->mImage = new Image("S:/materials/images/ìåï˚ïóëfçﬁ/ìGä÷åW/enemy_fairyHD.png", 0.5);
-		mEnemy[i]->mImage->setDivGraph(0, 0, 96, 64, 4, 3);
-		mEnemy[i]->mWidth = mEnemy[i]->mImage->width();		//âÊëúïù
-		mEnemy[i]->mHeight = mEnemy[i]->mImage->width();		//âÊëúçÇÇ≥
+		mEnemy[i].mImage = new Image("S:/materials/images/ìåï˚ïóëfçﬁ/ìGä÷åW/enemy_fairyHD.png", 0.5);
+		mEnemy[i].mImage->setDivGraph(0, 0, 96, 64, 4, 3);
+		mEnemy[i].mWidth = mEnemy[i].mImage->width();		//âÊëúïù
+		mEnemy[i].mHeight = mEnemy[i].mImage->width();		//âÊëúçÇÇ≥
 
-		mEnemy[i]->mX -= mEnemy[i]->mWidth / 2;				//xç¿ïW
-		mEnemy[i]->mY -= mEnemy[i]->mHeight / 2;				//yç¿ïW
+		mEnemy[i].mX -= mEnemy[i].mWidth / 2;				//xç¿ïW
+		mEnemy[i].mY -= mEnemy[i].mHeight / 2;				//yç¿ïW
 
-		mEnemy[i]->mShot = new E_Shot();						//íe
+		mEnemy[i].mShot = new E_Shot();						//íe
 
-		mEnemy[i]->mLive = false;
+		mEnemy[i].mLive = false;
 	}
 }
 
 Enemy::~Enemy() {
 	for (int i = 0; i < mEnemyNum; i++) {
-		delete mEnemy[i]->mImage;
-		mEnemy[i]->mImage = 0;
-		delete mEnemy[i]->mShot;
-		mEnemy[i]->mShot = 0;
+		delete mEnemy[i].mImage;
+		mEnemy[i].mImage = 0;
+		delete mEnemy[i].mShot;
+		mEnemy[i].mShot = 0;
 	}
 }
 
 void Enemy::getShotState(int eNum, int i, bool*  esLive, double* esx, double* esy) {
-	*esLive = mEnemy[eNum]->mShot->getState(i).live;
-	*esx = mEnemy[eNum]->mShot->getState(i).x;
-	*esy = mEnemy[eNum]->mShot->getState(i).y;
+	*esLive = mEnemy[eNum].mShot->getState(i).live;
+	*esx = mEnemy[eNum].mShot->getState(i).x;
+	*esy = mEnemy[eNum].mShot->getState(i).y;
+}
+
+void Enemy::setShotDeath(int eNum, int sNum) {
+	mEnemy[eNum].mShot->setDeath(sNum);
 }
 
 void Enemy::update() {
 	for(int i = 0; i < mEnemyNum; i++) {
-		if (mEnemy[i]->mHp > 0 && mEnemy[i]->mInTime == gCount) { mEnemy[i]->mLive = true; }
-		if (mEnemy[i]->mHp <= 0) { mEnemy[i]->mLive = false; }
-		if (mEnemy[i]->mLive) {
+		if (mEnemy[i].mHp > 0 && mEnemy[i].mInTime == gCount) { mEnemy[i].mLive = true; }		//èoåªéûä‘Ç…Ç»Ç¡ÇΩÇÁÉtÉâÉOåöÇƒÇÈ
+		if (mEnemy[i].mHp <= 0) { mEnemy[i].mLive = false; }										//HP0Ç…Ç»Ç¡ÇΩÇÁÉtÉâÉOóéÇ∆Ç∑
+		if (mEnemy[i].mLive) {																		//ÉtÉâÉOóßÇ¡ÇƒÇΩÇÁ
 			move(i);
-			if (mEnemy[i]->mInTime + mEnemy[i]->mShotTime <= gCount
-				&& gCount <= mEnemy[i]->mInTime + mEnemy[i]->mShotTime + mEnemy[i]->mShootingTime
+			if (mEnemy[i].mInTime + mEnemy[i].mShotTime <= gCount
+				&& gCount <= mEnemy[i].mInTime + mEnemy[i].mShotTime + mEnemy[i].mShootingTime
 				&& gCount % 16 == 0) {
-				mEnemy[i]->mShot->fire(mEnemy[i]->mX, mEnemy[i]->mY);
+				mEnemy[i].mShot->fire(mEnemy[i].mX, mEnemy[i].mY);
 			}
 			checkOutOfField(i);
 		}
-		else if (mEnemy[i]->mInTime < gCount && mEnemy[i]->mLive == false) {
-			delete mEnemy[i];
-			mEnemy[i] = 0;
-		}
-		mEnemy[i]->mShot->update();
+
+		mEnemy[i].mShot->update();
 	}
 }
 
 
 void Enemy::draw() {
 	for (int i = 0; i < mEnemyNum; i++) {
-		if (mEnemy[i]->mLive) {
-			drawScreen(mEnemy[i]->mX, mEnemy[i]->mY, mEnemy[i]->mDirection);
+		if (mEnemy[i].mLive) {
+			drawScreen(mEnemy[i].mX, mEnemy[i].mY, mEnemy[i].mDirection);
 		}
-		mEnemy[i]->mShot->draw();
+		mEnemy[i].mShot->draw();
 	}
 }
 
 void Enemy::drawScreen(int x, int y, int direction)const {
 	for (int i = 0; i < mEnemyNum; i++) {
-		mEnemy[i]->mImage->rotationDraw(x, y);
+		mEnemy[i].mImage->rotationDraw(x, y);
 	}
 }
 
@@ -102,16 +102,16 @@ void Enemy::move(int i) {
 	int dx = 0;
 	int dy = 0;
 
-	switch (mEnemy[i]->mMotionType) {
+	switch (mEnemy[i].mMotionType) {
 	case 0: break;
 	case 1:							//è„Ç©ÇÁèoåªÅ®ñﬂÇÈ
 		dy = 2;
 
-		if (mEnemy[i]->mInTime <= gCount && gCount <= mEnemy[i]->mInTime + mEnemy[i]->mMoveTime) {
-			mEnemy[i]->mY += dy;
+		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].mY += dy;
 		}
-		else if (mEnemy[i]->mInTime + mEnemy[i]->mStayTime <= gCount) {
-			mEnemy[i]->mY -= dy;
+		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
+			mEnemy[i].mY -= dy;
 		}
 
 		break;
@@ -120,13 +120,13 @@ void Enemy::move(int i) {
 		dx = -1;
 		dy = 2;
 
-		if (mEnemy[i]->mInTime <= gCount && gCount <= mEnemy[i]->mInTime + mEnemy[i]->mMoveTime) {
-			mEnemy[i]->mX += dx;
-			mEnemy[i]->mY += dy;
+		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].mX += dx;
+			mEnemy[i].mY += dy;
 		}
-		else if (mEnemy[i]->mInTime + mEnemy[i]->mStayTime <= gCount) {
-			mEnemy[i]->mX += dx;
-			mEnemy[i]->mY += dy;
+		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
+			mEnemy[i].mX += dx;
+			mEnemy[i].mY += dy;
 		}
 
 		break;
@@ -135,26 +135,26 @@ void Enemy::move(int i) {
 		dx = 1;
 		dy = 2;
 
-		if (mEnemy[i]->mInTime <= gCount && gCount <= mEnemy[i]->mInTime + mEnemy[i]->mMoveTime) {
-			mEnemy[i]->mX += dx;
-			mEnemy[i]->mY += dy;
+		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].mX += dx;
+			mEnemy[i].mY += dy;
 		}
-		else if (mEnemy[i]->mInTime + mEnemy[i]->mStayTime <= gCount) {
-			mEnemy[i]->mX += dx;
-			mEnemy[i]->mY += dy;
+		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
+			mEnemy[i].mX += dx;
+			mEnemy[i].mY += dy;
 		}
 
 		break;
 	}
 
-	if (dx == 0) { mEnemy[i]->mDirection = 0; }
-	if (dx < 0) { mEnemy[i]->mDirection = 1; }
-	if (dx > 0) { mEnemy[i]->mDirection = 2; }
+	if (dx == 0) { mEnemy[i].mDirection = 0; }
+	if (dx < 0) { mEnemy[i].mDirection = 1; }
+	if (dx > 0) { mEnemy[i].mDirection = 2; }
 }
 
 bool Enemy::checkOutOfField(int i) {
-	if (mEnemy[i]->mX < -mEnemy[i]->mWidth || mEnemy[i]->mX > 600
-		|| mEnemy[i]->mY < -mEnemy[i]->mHeight || mEnemy[i]->mY > 600) {
+	if (mEnemy[i].mX < -mEnemy[i].mWidth || mEnemy[i].mX > 600
+		|| mEnemy[i].mY < -mEnemy[i].mHeight || mEnemy[i].mY > 600) {
 		return true;
 	}
 	else { return false; }

@@ -5,6 +5,7 @@
 extern char gKey[256];		//キーステート
 
 class Image;
+class StringRenderer;
 
 namespace Sequence{
 class Parent;
@@ -16,6 +17,7 @@ public:
 	void update(Parent* parent);
 private:
 	Image* mImage;
+	StringRenderer* str;
 };
 
 } //namespace Sequence

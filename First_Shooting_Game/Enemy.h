@@ -4,7 +4,6 @@
 #define ENEMY_NUM 10	//‚ ‚Æ‚Å‚È‚ñ‚Æ‚©‚·‚é
 
 class Image;
-class File;
 class E_Shot;
 
 struct ENEMY {
@@ -42,14 +41,15 @@ public:
 	void draw();
 	int enemyNum(){return mEnemyNum;};
 	void getState(int i, bool* eLive, double* eX, double* eY) {
-		*eLive = mEnemy[i]->mLive; *eX = mEnemy[i]->mX; *eY = mEnemy[i]->mY;
+		*eLive = mEnemy[i].mLive; *eX = mEnemy[i].mX; *eY = mEnemy[i].mY;
 	};
 	void getShotState(int eNum, int i, bool*  esLive, double* esx, double* esy);
-	void setDamage(int i, int damage) { mEnemy[i]->mHp -= damage; };
+	void setDamage(int i, int damage) { mEnemy[i].mHp -= damage; };
+	void setShotDeath(int eNum, int sNum);
 
 private:
 	int mEnemyNum;
-	ENEMY** mEnemy;
+	ENEMY* mEnemy;
 
 	void move(int i);
 	bool checkOutOfField(int i);
