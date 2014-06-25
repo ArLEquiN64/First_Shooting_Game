@@ -4,12 +4,14 @@
 #define ENEMY_NUM 10	//あとでなんとかする
 
 class Image;
+class Player;
 class E_Shot;
 
 struct ENEMY {
 	int mType;				//種類
 	int mBulletType;		//弾種類
 	int mBulletSpeed;		//弾速度
+	int mBulletColor;		//弾色
 	int mMotionType;		//移動パターン
 	int mShotType;			//攻撃パターン
 	int mInTime;			//出現時間
@@ -17,8 +19,8 @@ struct ENEMY {
 	int mStayTime;			//滞在時間
 	int mShotTime;			//弾発射開始時間
 	int mShootingTime;		//弾発射時間
-	double mX;					//x座標
-	double mY;					//y座標
+	double mX;				//x座標
+	double mY;				//y座標
 	int mHp;				//体力
 	int mItem;				//アイテム
 
@@ -28,8 +30,11 @@ struct ENEMY {
 	int mDirection;			//N:0, L:1, R:2
 
 	bool mLive;				//出現フラグ
+	bool mDying;			//消滅フラグ
+	int mDyingCount;
 
 	Image* mImage;
+	Image* mEffect;
 	E_Shot* mShot;
 };
 
@@ -37,7 +42,7 @@ class Enemy{
 public:
 	Enemy();
 	~Enemy();
-	void update();
+	void update(Player*);
 	void draw();
 	int enemyNum(){return mEnemyNum;};
 	void getState(int i, bool* eLive, double* eX, double* eY) {

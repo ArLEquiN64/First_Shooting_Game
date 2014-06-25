@@ -79,6 +79,11 @@ void GParent::update(Parent* parent){
 		mPlay = 0;
 		mPause = new Game::Pause();
 		break;
+	case SEQ_GAMEOVER:
+		delete mPlay;
+		mPlay = 0;
+		parent->moveTo(Parent::SEQ_TITLE); //ŠÛ“Š‚°
+		break;
 	}
 	mNext = SEQ_NONE;
 }

@@ -3,14 +3,18 @@
 
 class Image{
 public:
-	Image(const char* filename,double extendRate=1.0);
+	Image(const char* filename, double baseExtendRate = 1.0);
 	~Image();
 	int width() const;
 	int height() const;
-	void draw(int x = 0, int y = 0, int i = 0) const;
-	void rotationDraw(int x =0,int y=0,int i=0, double angle=0) const;
 	void setDivGraph(int rectX, int rectY, int sizeX, int sizeY, int xNum, int yNum);
-	void setAnimetion();
+	void setAnimetion(int animeNum, int animeDef[], int animeSize, int frameRate);
+	void setEffect(int divNum);
+	void draw(int x = 0, int y = 0, int i = 0) const;
+	void rotationDraw(int x = 0, int y = 0, int i = 0, double extendRate = 1.0, double angle = 0) const;
+	void animationDraw(int x = 0, int y = 0, int animeNum = 0, double extendRate = 1.0, double angle = 0)const;
+	void drawEffect(int x, int y);
+
 private:
 	const char* mFileName;
 	int mBaseHandle;
@@ -22,7 +26,14 @@ private:
 	int mDivNum;
 	int mDivWidth;
 	int mDivHeight;
-	double mExtendRate;
+	double mBaseExtendRate;
+	bool mAnimeFlag;
+	int mAnimeDef[8][64];
+	int mAnimeSize[8];
+	int mFrameRate;
+	int mEffectCount;
+	double ext;
+	double ang;
 };
 
 #endif

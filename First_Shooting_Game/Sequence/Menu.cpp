@@ -19,8 +19,8 @@ Menu::~Menu(){
 void Menu::update(Parent* parent) {
 	//•`‰æ
 	mImage->draw();
-	str->drawBig(64, 256, "Press J to start,");
-	str->drawBig(64, 288, "Press K to return.");
+	str->drawBig(128, 288, "Press J to start,");
+	str->drawBig(128, 320, "Press K to return.");
 	//“ü—ÍŽæ“¾
 	if (gKey[KEY_INPUT_K]){ parent->moveTo(Parent::SEQ_TITLE); }
 	else if (gKey[KEY_INPUT_J]){ parent->moveTo(Parent::SEQ_GAME); }

@@ -17,7 +17,7 @@ Play::~Play(){
 void Play::update(GParent* parent){
 	Control* control = parent->control();
 	if (gKey[KEY_INPUT_Q]) { parent->moveTo(GParent::SEQ_PAUSE); }
-	control->update();
+	control->update(parent);
 	control->draw();
 	gCount++;
 }

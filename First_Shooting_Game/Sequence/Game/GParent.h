@@ -25,6 +25,7 @@ public:
 		SEQ_CLEAR,
 		SEQ_PAUSE,
 		SEQ_PLAY,
+		SEQ_GAMEOVER,
 
 		SEQ_NONE,
 	};

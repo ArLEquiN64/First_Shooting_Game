@@ -7,6 +7,7 @@
 extern char gKey[256];	//キーステート
 
 class Image;
+class Enemy;
 
 struct SHOT{
 	bool live;
@@ -18,7 +19,7 @@ class Shot{
 public:
 	Shot();
 	~Shot();
-	void update(int x,int y);
+	void update(int x, int y, Enemy*);
 	void draw();
 	SHOT state(int i){return mShot[i];};
 	void setDeath(int i) { mShot[i].live = false; };

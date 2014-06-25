@@ -5,18 +5,20 @@
 extern char gKey[256];	//キーステート
 
 class Image;
+class Enemy;
 class Shot;
 
 class Player{
 public:
 	Player();
 	~Player();
-	void update();
+	void update(Enemy*);
 	void draw();
 	void getState(bool* live, double* px, double* py) { *px = mX; *py = mY; *live = mLive; };
 	void getShotState(int sNum, bool* psLive, double* psx, double* psy);
-	void setDeath() { mLive = false; };
+	void setDeath();
 	void setShotDeath(int sNum);
+	bool life() { return mLife == 0 ? true : false; };
 
 private:
 	double mX;
@@ -28,8 +30,11 @@ private:
 
 	bool mLive;
 	int mLife = 5;
+	bool mDying;
+	int mDyingCount;
 
 	Image* mImage;
+	int* nomal;
 	Image* mHitArea;
 
 	Shot* mShot;

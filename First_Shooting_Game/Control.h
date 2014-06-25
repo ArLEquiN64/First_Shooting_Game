@@ -7,13 +7,15 @@ class Player;
 class Enemy;
 class DeathJudge;
 
+namespace Sequence { namespace Game { class GParent; } }
+
 class Image;
 
 class Control {
 public:
 	Control();
 	~Control();
-	void update();
+	void update(Sequence::Game::GParent*);
 	void draw();
 	void reset();
 

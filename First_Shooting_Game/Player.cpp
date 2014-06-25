@@ -2,14 +2,18 @@
 #include "Image.h"
 #include "Player.h"
 #include "Shot.h"
+#include "Enemy.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 extern int gCount;
 
-Player::Player() :mLive(true), mImage(0) {
+Player::Player() :mLive(true), mDying(false), mDyingCount(0), mImage(0) {
 	mImage = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/pl00_th14.png");
 	mImage->setDivGraph(0, 0, 32, 48, 8, 3);
+	int buf[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+	nomal = buf;
+	mImage->setAnimetion(0, nomal, 8, 8);
 	mHitArea = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/Effectelse.png", 0.25);
 	mShot = new Shot();
 	mX = 300;
@@ -31,7 +35,11 @@ void Player::setShotDeath(int sNum) {
 	mShot->setDeath(sNum);
 }
 
-void Player::update() {
+void Player::setDeath() { 
+	if (!mDying) { mLive = false; }
+}
+
+void Player::update(Enemy* enemy) {
 	if (mLive == true) {
 		//ˆÚ“®—Ê
 		int dx = 0;
@@ -54,24 +62,32 @@ void Player::update() {
 		if (dx < 0) { mDirection = 1; }
 		if (dx > 0) { mDirection = 2; }
 	}
-	else if (mLive == false && mLife > 0) {
+	else if (mLive == false && mLife > 0 && mDying == false) {
 		mLife -= 1;
+		mDying = true;
+	}
+	if (mDying == true) {
+		if (mDyingCount == 0) { mX = 300; mY = 600 + mImage->height(); }
+		else { mY -= 4; }
+		mDyingCount++;
+		if (mDyingCount == 60) { mDying = false; mDyingCount = 0; mLive = true; }
 	}
 
-	mShot->update(mX,mY);
+	mShot->update(mX, mY, enemy);
 }
 
 void Player::draw(){
 	mShot->draw();
-	drawScreen(mX, mY, mDirection);
+	if (!mDying) { drawScreen(mX, mY, mDirection); }
+	else if(mDyingCount % 3 == 0) { drawScreen(mX, mY, mDirection); }
 }
 
 void Player::drawScreen(int x, int y, int direction) const {
 	switch (direction) {
-	case 0:	mImage->rotationDraw(x, y, 0); break;
+	case 0:	mImage->animationDraw(x, y, 0); break;
 	case 1:	mImage->rotationDraw(x, y, 8); break;
 	case 2:	mImage->rotationDraw(x, y, 16); break;
 	}
-	mHitArea->rotationDraw(x, y, 0, (M_PI / 60)*(gCount % 120));
-	mHitArea->rotationDraw(x, y, 0, -(M_PI / 60)*(gCount % 120));
+	mHitArea->rotationDraw(x, y, 0, 1, (M_PI / 60)*(gCount % 120));
+	mHitArea->rotationDraw(x, y, 0, 1, -(M_PI / 60)*(gCount % 120));
 }

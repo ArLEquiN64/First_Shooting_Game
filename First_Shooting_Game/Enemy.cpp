@@ -3,6 +3,7 @@
 #include "File.h"
 #include "Enemy.h"
 #include "E_Shot.h"
+#include "Player.h"
 
 extern int gCount;
 
@@ -36,12 +37,17 @@ Enemy::Enemy() {
 		mEnemy[i].mWidth = mEnemy[i].mImage->width();		//画像幅
 		mEnemy[i].mHeight = mEnemy[i].mImage->width();		//画像高さ
 
+		mEnemy[i].mEffect = new Image("S:/materials/images/東方風素材/敵関係/eff_base.png");
+		mEnemy[i].mEffect->setDivGraph(0, 0, 64, 64, 4, 4);
+		mEnemy[i].mEffect->setEffect(0);
+
 		mEnemy[i].mX -= mEnemy[i].mWidth / 2;				//x座標
 		mEnemy[i].mY -= mEnemy[i].mHeight / 2;				//y座標
 
 		mEnemy[i].mShot = new E_Shot();						//弾
 
 		mEnemy[i].mLive = false;
+		mEnemy[i].mDying = false;
 	}
 }
 
@@ -64,21 +70,20 @@ void Enemy::setShotDeath(int eNum, int sNum) {
 	mEnemy[eNum].mShot->setDeath(sNum);
 }
 
-void Enemy::update() {
+void Enemy::update(Player* player) {
 	for(int i = 0; i < mEnemyNum; i++) {
 		if (mEnemy[i].mHp > 0 && mEnemy[i].mInTime == gCount) { mEnemy[i].mLive = true; }		//出現時間になったらフラグ建てる
-		if (mEnemy[i].mHp <= 0) { mEnemy[i].mLive = false; }										//HP0になったらフラグ落とす
+		if (mEnemy[i].mHp <= 0) { mEnemy[i].mLive = false; mEnemy[i].mDying = true; }										//HP0になったらフラグ落とす
 		if (mEnemy[i].mLive) {																		//フラグ立ってたら
 			move(i);
 			if (mEnemy[i].mInTime + mEnemy[i].mShotTime <= gCount
-				&& gCount <= mEnemy[i].mInTime + mEnemy[i].mShotTime + mEnemy[i].mShootingTime
-				&& gCount % 16 == 0) {
-				mEnemy[i].mShot->fire(mEnemy[i].mX, mEnemy[i].mY);
+				&& gCount <= mEnemy[i].mInTime + mEnemy[i].mShotTime + mEnemy[i].mShootingTime) {
+				mEnemy[i].mShot->fire(mEnemy[i].mX, mEnemy[i].mY, mEnemy[i].mShotType, player);
 			}
 			checkOutOfField(i);
 		}
 
-		mEnemy[i].mShot->update();
+		mEnemy[i].mShot->update(mEnemy[i].mShotType, player);
 	}
 }
 
@@ -88,6 +93,10 @@ void Enemy::draw() {
 		if (mEnemy[i].mLive) {
 			drawScreen(mEnemy[i].mX, mEnemy[i].mY, mEnemy[i].mDirection);
 		}
+		if (mEnemy[i].mDying) {
+			mEnemy[i].mEffect->drawEffect(mEnemy[i].mX, mEnemy[i].mY);
+		}
+
 		mEnemy[i].mShot->draw();
 	}
 }

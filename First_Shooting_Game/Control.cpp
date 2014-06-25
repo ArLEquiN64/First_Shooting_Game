@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "DeathJudge.h"
+#include "Sequence/Game/GParent.h"
 
 extern int gCount;
 
@@ -29,12 +30,13 @@ Control::~Control() {
 	mEnemy = 0;
 }
 
-void Control::update() {
+void Control::update(Sequence::Game::GParent* parent) {
 	mScenery->update();
 	mInfo->update(mPlayer);
-	mPlayer->update();
-	mEnemy->update();
+	mPlayer->update(mEnemy);
+	mEnemy->update(mPlayer);
 	mJudge->update(mPlayer,mEnemy);
+	if (mPlayer->life()) { parent->moveTo(Sequence::Game::GParent::SEQ_GAMEOVER); }
 }
 
 void Control::draw(){

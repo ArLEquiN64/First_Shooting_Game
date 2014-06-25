@@ -5,9 +5,9 @@
 #include <math.h>
 
 #define P_R		3
-#define P_S_R	5
-#define E_R		10
-#define E_S_R	5
+#define P_S_R	6
+#define E_R		12
+#define E_S_R	6
 
 void DeathJudge::update(Player* player, Enemy* enemy) {
 	bool plive, pslive, elive, eslive;
@@ -18,7 +18,7 @@ void DeathJudge::update(Player* player, Enemy* enemy) {
 		if (pslive == true) {
 			for (int ei = 0; ei < enemy->enemyNum(); ei++) {
 				enemy->getState(ei, &elive, &ex, &ey);
-				if (elive == true && circleCollision(P_S_R, psx, psy, E_R, ex, ey)) {
+				if (elive == true && ey>0 && circleCollision(P_S_R, psx, psy, E_R, ex, ey)) {
 					enemy->setDamage(ei, 1);
 					player->setShotDeath(psi);
 				}

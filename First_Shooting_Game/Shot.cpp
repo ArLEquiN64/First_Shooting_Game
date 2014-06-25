@@ -18,7 +18,7 @@ Shot::~Shot() {
 	mImage = 0;
 }
 
-void Shot::update(int x, int y) {
+void Shot::update(int x, int y, Enemy* enemy) {
 	//’e”­ŽË
 	if (gKey[KEY_INPUT_J] && gCount % 1 == 0) {
 		for (int i = 0; i < BULLET; i++) {
@@ -38,7 +38,7 @@ void Shot::update(int x, int y) {
 			mShot[i].y -= 32;
 		}
 		//‰æ–ÊŠO”»’è
-		if (mShot[i].y < -mImage->height()) {
+		if (mShot[i].y < -mImage->height()/2) {
 			mShot[i].live = false;
 		}
 	}
@@ -46,6 +46,6 @@ void Shot::update(int x, int y) {
 
 void Shot::draw() {
 	for (int i = 0; i < BULLET; i++) {
-		if (mShot[i].live == true) { mImage->rotationDraw(mShot[i].x, mShot[i].y, 0); }
+		if (mShot[i].live == true) { mImage->rotationDraw(mShot[i].x, mShot[i].y, 0, 1, 0); }
 	}
 }
