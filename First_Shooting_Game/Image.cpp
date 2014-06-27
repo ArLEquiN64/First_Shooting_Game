@@ -1,9 +1,7 @@
 #include "DxLib.h"
 #include "Image.h"
 
-extern int gCount;
-
-Image::Image(const char* filename,double baseExtendRate) : mDivFlag(false), mAnimeFlag(false) {
+Image::Image(const char* filename, double baseExtendRate) : mDivFlag(false), mAnimeFlag(false), mTurnFlag(false) {
 	mFileName = filename;
 	mBaseHandle = LoadGraph(mFileName);
 	GetGraphSize(mBaseHandle,&mBaseWidth,&mBaseHeight);
@@ -55,7 +53,7 @@ void Image::setAnimetion(int animeNum, int animeDef[], int animeSize, int frameR
 }
 
 void Image::setEffect(int divNum) {
-	ext = 0.01;
+	ext = 0.005;
 	ang = 0;
 }
 
@@ -64,24 +62,23 @@ void Image::draw(int x,int y,int i) const {
 }
 
 void Image::rotationDraw(int x, int y, int i, double extendRate, double angle) const {
-	if (mDivFlag) { DrawRotaGraph(x, y, mBaseExtendRate*extendRate, angle, mDivHandle[i], true); }
+	if (mDivFlag) { DrawRotaGraph(x, y, mBaseExtendRate*extendRate, angle, mDivHandle[i], true, mTurnFlag); }
 	else { DrawRotaGraph(x, y, mBaseExtendRate*extendRate, angle, mBaseHandle, true); }
 }
 
-void Image::animationDraw(int x, int y, int animeNum, double extendRate, double angle) const {
-	rotationDraw(x, y, mAnimeDef[animeNum][((gCount - gCount % mFrameRate) / mFrameRate) % mAnimeSize[animeNum]], extendRate, angle);
+void Image::animationDraw(int x, int y, int animeNum, double extendRate, double angle) {
+	rotationDraw(x, y, mAnimeDef[animeNum][((mAnimeCount[animeNum] - mAnimeCount[animeNum] % mFrameRate) / mFrameRate) % mAnimeSize[animeNum]], extendRate, angle);
+	mAnimeCount[animeNum] == mAnimeSize[animeNum] ? mAnimeCount[animeNum] = 0 : mAnimeCount[animeNum]++;
 }
 
 void Image::drawEffect(int x, int y) {
 	if (mEffectCount <= 20) {
-		ext += 0.01;
+		ext += 0.005;
 		ang = GetRand(360) * 3.14 / 180;
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 		int xrand, yrand;
 		xrand = GetRand(10);
 		yrand = GetRand(10);
-		DrawRotaGraph3(x, y, 32, 32, ext*xrand, ext*yrand, ang, mDivHandle[0], true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		DrawRotaGraph3(x, y, 128, 128, ext*xrand, ext*yrand, ang, mDivHandle[0], true);
 		mEffectCount++;
 	}
 }

@@ -5,6 +5,9 @@
 #include "E_Shot.h"
 #include "Player.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 extern int gCount;
 
 Enemy::Enemy() {
@@ -15,30 +18,32 @@ Enemy::Enemy() {
 	mEnemy = new ENEMY[mEnemyNum];
 	mEnemy = file->storeStageData();
 	for (int i = 0; i < mEnemyNum; i++) {
-		//mEnemy[i].mType = data.mType;						//éÌóﬁ
-		//mEnemy[i].mBulletType = data.mBulletType;			//íeéÌóﬁ
-		//mEnemy[i].mBulletSpeed = data.mBulletSpeed;		//íeë¨ìx
-		//mEnemy[i].mMotionType = data.mMotionType;			//à⁄ìÆÉpÉ^Å[Éì
-		//mEnemy[i].mShotType = data.mShotType;				//çUåÇÉpÉ^Å[Éì
-		//mEnemy[i].mInTime = data.mInTime;					//èoåªéûä‘
-		//mEnemy[i].mMoveTime = data.mMoveTime;				//à⁄ìÆéûä‘
-		//mEnemy[i].mStayTime = data.mStayTime;				//ëÿç›éûä‘
-		//mEnemy[i].mShotTime = data.mShotTime;				//íeî≠éÀäJénéûä‘
-		//mEnemy[i].mShootingTime = data.mShootingTime;		//íeî≠éÀéûä‘
-
-		//mEnemy[i].mHp = data.mHp;							//ëÃóÕ
-		//mEnemy[i].mItem = data.mItem;						//ÉAÉCÉeÉÄ
-
 		mEnemy[i].mHitArea = 0;								//ìñÇΩÇËîªíË
-		mEnemy[i].mDirection = 0;							//N:0, L:1, R:2
-
-		mEnemy[i].mImage = new Image("S:/materials/images/ìåï˚ïóëfçﬁ/ìGä÷åW/enemy_fairyHD.png", 0.5);
-		mEnemy[i].mImage->setDivGraph(0, 0, 96, 64, 4, 3);
+		mEnemy[i].mDirection = 0;
+		int buf0[] = { 0, 1, 2, 3 };
+		int buf1[] = { 4, 5, 6, 7 };
+		int buf2[] = { 8, 9, 10, 11 };				//N:0, L:1, R:2
+		switch (mEnemy[i].mType) {
+		case 1:
+			mEnemy[i].mImage = new Image("S:/materials/images/ìåï˚ïóëfçﬁ/ìGä÷åW/enemy_fairyHD.png", 0.5);
+			mEnemy[i].mImage->setDivGraph(0, 0, 96, 64, 4, 3);
+			mEnemy[i].mImage->setAnimetion(0, buf0, 4, 4);
+			mEnemy[i].mImage->setAnimetion(1, buf1, 4, 4);
+			mEnemy[i].mImage->setAnimetion(2, buf2, 4, 4);
+			break;
+		case 2:
+			mEnemy[i].mImage = new Image("S:/materials/images/ìåï˚ïóëfçﬁ/ìGä÷åW/enemy_fairyHD.png", 0.5);
+			mEnemy[i].mImage->setDivGraph(0, 64, 96, 128, 4, 3);
+			mEnemy[i].mImage->setAnimetion(0, buf0, 4, 4);
+			mEnemy[i].mImage->setAnimetion(1, buf1, 4, 4);
+			mEnemy[i].mImage->setAnimetion(2, buf2, 4, 4);
+			break;
+		}
 		mEnemy[i].mWidth = mEnemy[i].mImage->width();		//âÊëúïù
 		mEnemy[i].mHeight = mEnemy[i].mImage->width();		//âÊëúçÇÇ≥
 
-		mEnemy[i].mEffect = new Image("S:/materials/images/ìåï˚ïóëfçﬁ/ìGä÷åW/eff_base.png");
-		mEnemy[i].mEffect->setDivGraph(0, 0, 64, 64, 4, 4);
+		mEnemy[i].mEffect = new Image("S:/materials/images/ñ{â∆ïóëfçﬁ/ñ{â∆ïóëfçﬁãlÇﬂçáÇÌÇπ/img/MagicCircle_alpha.png",0.01);
+		mEnemy[i].mEffect->setDivGraph(0, 0, 256, 256, 4, 2);
 		mEnemy[i].mEffect->setEffect(0);
 
 		mEnemy[i].mX -= mEnemy[i].mWidth / 2;				//xç¿ïW
@@ -73,14 +78,13 @@ void Enemy::setShotDeath(int eNum, int sNum) {
 void Enemy::update(Player* player) {
 	for(int i = 0; i < mEnemyNum; i++) {
 		if (mEnemy[i].mHp > 0 && mEnemy[i].mInTime == gCount) { mEnemy[i].mLive = true; }		//èoåªéûä‘Ç…Ç»Ç¡ÇΩÇÁÉtÉâÉOåöÇƒÇÈ
-		if (mEnemy[i].mHp <= 0) { mEnemy[i].mLive = false; mEnemy[i].mDying = true; }										//HP0Ç…Ç»Ç¡ÇΩÇÁÉtÉâÉOóéÇ∆Ç∑
+		if (mEnemy[i].mHp <= 0 || checkOutOfField(i)) { mEnemy[i].mLive = false; mEnemy[i].mDying = true; }										//HP0Ç…Ç»Ç¡ÇΩÇÁÉtÉâÉOóéÇ∆Ç∑
 		if (mEnemy[i].mLive) {																		//ÉtÉâÉOóßÇ¡ÇƒÇΩÇÁ
 			move(i);
 			if (mEnemy[i].mInTime + mEnemy[i].mShotTime <= gCount
 				&& gCount <= mEnemy[i].mInTime + mEnemy[i].mShotTime + mEnemy[i].mShootingTime) {
 				mEnemy[i].mShot->fire(mEnemy[i].mX, mEnemy[i].mY, mEnemy[i].mShotType, player);
 			}
-			checkOutOfField(i);
 		}
 
 		mEnemy[i].mShot->update(mEnemy[i].mShotType, player);
@@ -103,67 +107,103 @@ void Enemy::draw() {
 
 void Enemy::drawScreen(int x, int y, int direction)const {
 	for (int i = 0; i < mEnemyNum; i++) {
-		mEnemy[i].mImage->rotationDraw(x, y);
+		switch (direction) {
+		case 0:
+			mEnemy[i].mImage->animationDraw(x, y, 0);
+			break;
+		case 1:
+			mEnemy[i].mImage->setTurn(true);
+			mEnemy[i].mImage->animationDraw(x, y, 1);
+			mEnemy[i].mImage->setTurn(false);
+			break;
+		case 2:
+			mEnemy[i].mImage->animationDraw(x, y, 1);
+			break;
+		}
 	}
 }
 
 void Enemy::move(int i) {
-	int dx = 0;
-	int dy = 0;
-
 	switch (mEnemy[i].mMotionType) {
 	case 0: break;
 	case 1:							//è„Ç©ÇÁèoåªÅ®ñﬂÇÈ
-		dy = 2;
-
 		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
-			mEnemy[i].mY += dy;
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 2;
 		}
 		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
-			mEnemy[i].mY -= dy;
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = -2;
 		}
-
 		break;
 
 	case 2:							//è„Ç©ÇÁèoåªÅ®ç∂Ç÷éJÇØÇÈ
-		dx = -1;
-		dy = 2;
-
 		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
-			mEnemy[i].mX += dx;
-			mEnemy[i].mY += dy;
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 2;
 		}
 		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
-			mEnemy[i].mX += dx;
-			mEnemy[i].mY += dy;
+			mEnemy[i].dx = -1;
+			mEnemy[i].dy = 2;
 		}
-
 		break;
 
 	case 3:							//è„Ç©ÇÁèoåªÅ®âEÇ÷éJÇØÇÈ
-		dx = 1;
-		dy = 2;
-
 		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
-			mEnemy[i].mX += dx;
-			mEnemy[i].mY += dy;
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 2;
 		}
 		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
-			mEnemy[i].mX += dx;
-			mEnemy[i].mY += dy;
+			mEnemy[i].dx = 1;
+			mEnemy[i].dy = 2;
 		}
+		break;
 
+	case 4:							//â∫Ç™Ç¡ÇƒÇ≠ÇÈ
+		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 3;
+		}
+		if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
+			mEnemy[i].dx -= 5 / 100.0;		//ç∂å¸Ç´â¡ë¨
+			mEnemy[i].dy -= 5 / 100.0;		//å∏ë¨
+		}
+		break;
+
+	case 5:							//â∫Ç™Ç¡ÇƒÇ≠ÇÈ
+		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 3;
+		}
+		if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
+			mEnemy[i].dx += 5 / 100.0;		//âEå¸Ç´â¡ë¨
+			mEnemy[i].dy -= 5 / 100.0;		//å∏ë¨
+		}
+		break;
+
+	case 6:							//â∫Ç™Ç¡ÇƒÇ≠ÇÈ
+		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 4 * sin(1.5*gCount);
+		}
+		if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
+			mEnemy[i].dx = cos(M_PI/45*gCount);
+			mEnemy[i].dy = 2;
+		}
 		break;
 	}
 
-	if (dx == 0) { mEnemy[i].mDirection = 0; }
-	if (dx < 0) { mEnemy[i].mDirection = 1; }
-	if (dx > 0) { mEnemy[i].mDirection = 2; }
+	mEnemy[i].mX += mEnemy[i].dx;
+	mEnemy[i].mY += mEnemy[i].dy;
+
+	if (mEnemy[i].dx == 0) { mEnemy[i].mDirection = 0; }
+	if (mEnemy[i].dx < 0) { mEnemy[i].mDirection = 1; }
+	if (mEnemy[i].dx > 0) { mEnemy[i].mDirection = 2; }
 }
 
 bool Enemy::checkOutOfField(int i) {
-	if (mEnemy[i].mX < -mEnemy[i].mWidth || mEnemy[i].mX > 600
-		|| mEnemy[i].mY < -mEnemy[i].mHeight || mEnemy[i].mY > 600) {
+	if (mEnemy[i].mX < -100-mEnemy[i].mWidth || mEnemy[i].mX > 700
+		|| mEnemy[i].mY < -100-mEnemy[i].mHeight || mEnemy[i].mY > 700) {
 		return true;
 	}
 	else { return false; }

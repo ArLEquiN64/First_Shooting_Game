@@ -19,6 +19,7 @@ public:
 	void setDeath();
 	void setShotDeath(int sNum);
 	bool life() { return mLife == 0 ? true : false; };
+	double shotDamgage();
 
 private:
 	double mX;
@@ -30,6 +31,8 @@ private:
 
 	bool mLive;
 	int mLife = 5;
+	bool mReborn;
+	int mRebornCount;
 	bool mDying;
 	int mDyingCount;
 

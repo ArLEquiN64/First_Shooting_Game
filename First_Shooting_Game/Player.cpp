@@ -31,12 +31,17 @@ void Player::getShotState(int sNum, bool* psLive, double* psx, double* psy) {
 	*psLive = mShot->state(sNum).live; *psx = mShot->state(sNum).x; *psy = mShot->state(sNum).y;
 }
 
+double Player::shotDamgage() {
+	double level = mShot->nowShotLevel();
+	return level * 6 / 10;
+}
+
 void Player::setShotDeath(int sNum) {
 	mShot->setDeath(sNum);
 }
 
 void Player::setDeath() { 
-	if (!mDying) { mLive = false; }
+	if (!mDying) { mDying = true; }
 }
 
 void Player::update(Enemy* enemy) {
@@ -48,7 +53,7 @@ void Player::update(Enemy* enemy) {
 		if (gKey[KEY_INPUT_A] == 1 && gKey[KEY_INPUT_D] == 0) { dx = -2; }
 		if (gKey[KEY_INPUT_W] == 0 && gKey[KEY_INPUT_S] == 1) { dy = 2; }
 		if (gKey[KEY_INPUT_W] == 1 && gKey[KEY_INPUT_S] == 0) { dy = -2; }
-		if (gKey[KEY_INPUT_SPACE] == 0) { dx *= 3; dy *= 3; }	//Spaceキーで速度半減
+		if (gKey[KEY_INPUT_SPACE] == 0) { dx *= 3; dy *= 3; }	//Spaceキーで速度減
 		//移動後座標
 		int tx = mX + dx;
 		int ty = mY + dy;
@@ -62,24 +67,22 @@ void Player::update(Enemy* enemy) {
 		if (dx < 0) { mDirection = 1; }
 		if (dx > 0) { mDirection = 2; }
 	}
-	else if (mLive == false && mLife > 0 && mDying == false) {
-		mLife -= 1;
-		mDying = true;
-	}
-	if (mDying == true) {
-		if (mDyingCount == 0) { mX = 300; mY = 600 + mImage->height(); }
+	if (mLive == true && mDying == true) { mDyingCount == 12 ? mLive = false, mDyingCount = 0, mDying = false, mLife -= 1, mReborn = true : mDyingCount++; }
+	if (mReborn == true) {
+		if (mRebornCount == 0) { mX = 300; mY = 600 + mImage->height(); }
 		else { mY -= 4; }
-		mDyingCount++;
-		if (mDyingCount == 60) { mDying = false; mDyingCount = 0; mLive = true; }
+		mRebornCount++;
+		if (mRebornCount == 60) { mReborn = false; mRebornCount = 0; mLive = true; }
 	}
 
-	mShot->update(mX, mY, enemy);
+	mShot->update(mX, mY, enemy, mReborn);
 }
 
 void Player::draw(){
 	mShot->draw();
-	if (!mDying) { drawScreen(mX, mY, mDirection); }
-	else if(mDyingCount % 3 == 0) { drawScreen(mX, mY, mDirection); }
+	if (mLive&&!mDying) { drawScreen(mX, mY, mDirection); }
+	else if (mDying&&mDyingCount % 3 == 0) { drawScreen(mX, mY, mDirection); }
+	else if (mReborn&&mRebornCount % 2 == 0) { drawScreen(mX, mY, mDirection); }
 }
 
 void Player::drawScreen(int x, int y, int direction) const {
@@ -88,6 +91,8 @@ void Player::drawScreen(int x, int y, int direction) const {
 	case 1:	mImage->rotationDraw(x, y, 8); break;
 	case 2:	mImage->rotationDraw(x, y, 16); break;
 	}
-	mHitArea->rotationDraw(x, y, 0, 1, (M_PI / 60)*(gCount % 120));
-	mHitArea->rotationDraw(x, y, 0, 1, -(M_PI / 60)*(gCount % 120));
+	if (gKey[KEY_INPUT_SPACE]) {
+		mHitArea->rotationDraw(x, y, 0, 1, (M_PI / 60)*(gCount % 120));
+		mHitArea->rotationDraw(x, y, 0, 1, -(M_PI / 60)*(gCount % 120));
+	}
 }

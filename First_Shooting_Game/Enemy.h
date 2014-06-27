@@ -21,7 +21,7 @@ struct ENEMY {
 	int mShootingTime;		//弾発射時間
 	double mX;				//x座標
 	double mY;				//y座標
-	int mHp;				//体力
+	double mHp;				//体力
 	int mItem;				//アイテム
 
 	int mWidth;				//幅
@@ -32,6 +32,9 @@ struct ENEMY {
 	bool mLive;				//出現フラグ
 	bool mDying;			//消滅フラグ
 	int mDyingCount;
+
+	double dx;
+	double dy;
 
 	Image* mImage;
 	Image* mEffect;
@@ -49,7 +52,7 @@ public:
 		*eLive = mEnemy[i].mLive; *eX = mEnemy[i].mX; *eY = mEnemy[i].mY;
 	};
 	void getShotState(int eNum, int i, bool*  esLive, double* esx, double* esy);
-	void setDamage(int i, int damage) { mEnemy[i].mHp -= damage; };
+	void setDamage(int i, double damage) { mEnemy[i].mHp -= damage; };
 	void setShotDeath(int eNum, int sNum);
 
 private:

@@ -26,6 +26,7 @@ public:
 
 private:
 	double rad;
+	int mFireCount;
 	int msCount;
 	int num;
 	E_SHOT* mShot;

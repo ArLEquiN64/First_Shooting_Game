@@ -4,7 +4,7 @@
 
 extern int gCount;
 
-Shot::Shot() {
+Shot::Shot() : mShotLevel(1) {
 	mImage = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/pl_shot.png");
 	mImage->setDivGraph(32, 128, 16, 64, 2, 1);
 	mShot = new SHOT[BULLET];
@@ -18,9 +18,9 @@ Shot::~Shot() {
 	mImage = 0;
 }
 
-void Shot::update(int x, int y, Enemy* enemy) {
+void Shot::update(int x, int y, Enemy* enemy, bool reborn) {
 	//’e”­ŽË
-	if (gKey[KEY_INPUT_J] && gCount % 1 == 0) {
+	if (!reborn && gKey[KEY_INPUT_J] && gCount % 1 == 0) {
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false) {
 				mShot[i].live = true;

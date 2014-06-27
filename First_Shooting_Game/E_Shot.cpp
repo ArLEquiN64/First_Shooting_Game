@@ -9,7 +9,7 @@
 
 extern int gCount;
 
-E_Shot::E_Shot() {
+E_Shot::E_Shot() : msCount(0), mFireCount(0), num(0) {
 	mImage = new Image("S:/materials/images/niconi-commons/niconicommons_only/nc89509.png",0.6);
 	mImage->setDivGraph(0,0,32,32,16,12);
 	mShot = new E_SHOT[BULLET];
@@ -28,7 +28,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 	double px, py;
 	bool a;
 	player->getState(&a, &px, &py);
-	if (msCount == 0) { rad = atan2(py - y, px - x); }
+	if (mFireCount == 0) { rad = atan2(py - y, px - x); }
 	switch (shotType) {
 	case 1:
 		for (int i = 0; i < BULLET; i++) {
@@ -128,6 +128,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 		}
 		break;
 	}
+	mFireCount++;
 }
 
 void E_Shot::update(int shotType, Player* player) {

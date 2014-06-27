@@ -19,13 +19,15 @@ class Shot{
 public:
 	Shot();
 	~Shot();
-	void update(int x, int y, Enemy*);
+	void update(int x, int y, Enemy*, bool);
 	void draw();
+	int nowShotLevel() { return mShotLevel; };
 	SHOT state(int i){return mShot[i];};
 	void setDeath(int i) { mShot[i].live = false; };
 
 private:
 	SHOT* mShot;
+	int mShotLevel;
 	
 	Image* mImage;
 };

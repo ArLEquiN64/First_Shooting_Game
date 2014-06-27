@@ -19,7 +19,7 @@ void DeathJudge::update(Player* player, Enemy* enemy) {
 			for (int ei = 0; ei < enemy->enemyNum(); ei++) {
 				enemy->getState(ei, &elive, &ex, &ey);
 				if (elive == true && ey>0 && circleCollision(P_S_R, psx, psy, E_R, ex, ey)) {
-					enemy->setDamage(ei, 1);
+					enemy->setDamage(ei, player->shotDamgage());
 					player->setShotDeath(psi);
 				}
 			}
