@@ -30,7 +30,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 	player->getState(&a, &px, &py);
 	if (mFireCount == 0) { rad = atan2(py - y, px - x); }
 	switch (shotType) {
-	case 1:
+	case 1:		//ê^â∫Ç÷
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false && gCount % 16 == 0) {
 				mShot[i].live = true;
@@ -40,7 +40,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 			}
 		}
 		break;
-	case 2:
+	case 2:		//é©ã@ë_Ç¢
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false && gCount % 16 == 0) {
 				mShot[i].live = true;
@@ -50,7 +50,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 			}
 		}
 		break;
-	case 3:
+	case 3:		//é©ã@ë_Ç¢3ê¸
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false && gCount % 16 == 0) {
 				mShot[i].live = true;
@@ -83,7 +83,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 			}
 		}
 		break;
-	case 4:
+	case 4:		//ÉâÉìÉ_ÉÄ
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false && gCount % 2 == 0) {
 				mShot[i].live = true;
@@ -98,7 +98,7 @@ void E_Shot::fire(double x, double y, int shotType, Player* player) {
 			}
 		}
 		break;
-	case 5:
+	case 5:		//å 
 		for (int i = 0; i < BULLET; i++) {
 			if (mShot[i].live == false && gCount % 3 == 0) {
 				mShot[i].live = true;

@@ -16,7 +16,8 @@ Loading::Loading() : mImage(0), mCount(0), mStarted(false) {
 	mImage = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/pl02_option.png");
 	mImage->setDivGraph(0, 0, 32, 32, 8, 2);
 	int buf[] = { 0, 1, 2, 3, 4, 5, 6, 7, 15, 14, 13, 12, 11, 10, 9, 8 };
-	mImage->setAnimetion(0, buf, 16, 16);
+	anime=buf;
+	mImage->setAnimetion(0, anime, 16, 16);
 	mStr = new StringRenderer();
 }
 

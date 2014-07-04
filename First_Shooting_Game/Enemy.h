@@ -1,7 +1,7 @@
 #ifndef INCLUDED_ENEMY_H
 #define INCLUDED_ENEMY_H
 
-#define ENEMY_NUM 10	//‚ ‚Æ‚Å‚È‚ñ‚Æ‚©‚·‚é
+#define ENEMY_NUM 60	//‚ ‚Æ‚Å‚È‚ñ‚Æ‚©‚·‚é
 
 class Image;
 class Player;
@@ -58,6 +58,9 @@ public:
 private:
 	int mEnemyNum;
 	ENEMY* mEnemy;
+	int* nomal;
+	int* left;
+	int* right;
 
 	void move(int i);
 	bool checkOutOfField(int i);

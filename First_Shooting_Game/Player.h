@@ -30,7 +30,7 @@ private:
 	int mDirection;	//N:0, L:1, R:2
 
 	bool mLive;
-	int mLife = 5;
+	int mLife;
 	bool mReborn;
 	int mRebornCount;
 	bool mDying;

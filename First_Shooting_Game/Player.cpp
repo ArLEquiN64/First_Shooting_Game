@@ -8,7 +8,7 @@
 
 extern int gCount;
 
-Player::Player() :mLive(true), mDying(false), mDyingCount(0), mImage(0) {
+Player::Player() :mLive(true), mLife(5), mDying(false), mDyingCount(0), mReborn(false), mRebornCount(0), mImage(0) {
 	mImage = new Image("S:/materials/images/“Œ•û•—‘fÞ/Ž©‹@/pl00_th14.png");
 	mImage->setDivGraph(0, 0, 32, 48, 8, 3);
 	int buf[] = { 0, 1, 2, 3, 4, 5, 6, 7 };

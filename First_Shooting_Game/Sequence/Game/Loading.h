@@ -17,6 +17,7 @@ public:
 private:
 	Image* mImage;
 	StringRenderer* mStr;
+	int* anime;
 	int mCount;
 	bool mStarted; //ロード開始要請を出したか
 };

@@ -9,6 +9,7 @@ namespace Sequence{
 Parent::Parent() :
 	mTitle(0), mMenu(0), mGame(0), mNext(SEQ_NONE){
 	mTitle = new Title();
+	//mGame = new Game::GParent();		//デバッグ中のみ。本当はmTitle = new Title();
 }
 
 Parent::~Parent(){

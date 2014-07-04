@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "Image.h"
 
-Image::Image(const char* filename, double baseExtendRate) : mDivFlag(false), mAnimeFlag(false), mTurnFlag(false) {
+Image::Image(const char* filename, double baseExtendRate) : mDivFlag(false), mAnimeFlag(false), mTurnFlag(false), mEffectCount(0) {
 	mFileName = filename;
 	mBaseHandle = LoadGraph(mFileName);
 	GetGraphSize(mBaseHandle,&mBaseWidth,&mBaseHeight);
@@ -47,6 +47,7 @@ void Image::setAnimetion(int animeNum, int animeDef[], int animeSize, int frameR
 		for (int i = 0; i < mAnimeSize[animeNum]; i++) {
 			mAnimeDef[animeNum][i] = animeDef[i];
 		}
+		mAnimeCount[animeNum]=0;
 		mFrameRate = frameRate;
 		mAnimeFlag = true;
 	}
@@ -67,8 +68,8 @@ void Image::rotationDraw(int x, int y, int i, double extendRate, double angle) c
 }
 
 void Image::animationDraw(int x, int y, int animeNum, double extendRate, double angle) {
+	mAnimeCount[animeNum]++;
 	rotationDraw(x, y, mAnimeDef[animeNum][((mAnimeCount[animeNum] - mAnimeCount[animeNum] % mFrameRate) / mFrameRate) % mAnimeSize[animeNum]], extendRate, angle);
-	mAnimeCount[animeNum] == mAnimeSize[animeNum] ? mAnimeCount[animeNum] = 0 : mAnimeCount[animeNum]++;
 }
 
 void Image::drawEffect(int x, int y) {

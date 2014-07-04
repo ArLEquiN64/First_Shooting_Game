@@ -21,22 +21,25 @@ Enemy::Enemy() {
 		mEnemy[i].mHitArea = 0;								//“–‚½‚è”»’è
 		mEnemy[i].mDirection = 0;
 		int buf0[] = { 0, 1, 2, 3 };
+		nomal=buf0;
 		int buf1[] = { 4, 5, 6, 7 };
-		int buf2[] = { 8, 9, 10, 11 };				//N:0, L:1, R:2
+		left=buf1;
+		int buf2[] = { 8, 9, 10, 11 };	
+		right=buf2;//N:0, L:1, R:2
 		switch (mEnemy[i].mType) {
 		case 1:
 			mEnemy[i].mImage = new Image("S:/materials/images/“Œ•û•—‘fŞ/“GŠÖŒW/enemy_fairyHD.png", 0.5);
 			mEnemy[i].mImage->setDivGraph(0, 0, 96, 64, 4, 3);
-			mEnemy[i].mImage->setAnimetion(0, buf0, 4, 4);
-			mEnemy[i].mImage->setAnimetion(1, buf1, 4, 4);
-			mEnemy[i].mImage->setAnimetion(2, buf2, 4, 4);
+			mEnemy[i].mImage->setAnimetion(0, nomal, 4, 4);
+			mEnemy[i].mImage->setAnimetion(1, left, 4, 4);
+			mEnemy[i].mImage->setAnimetion(2, right, 4, 4);
 			break;
 		case 2:
 			mEnemy[i].mImage = new Image("S:/materials/images/“Œ•û•—‘fŞ/“GŠÖŒW/enemy_fairyHD.png", 0.5);
 			mEnemy[i].mImage->setDivGraph(0, 64, 96, 128, 4, 3);
-			mEnemy[i].mImage->setAnimetion(0, buf0, 4, 4);
-			mEnemy[i].mImage->setAnimetion(1, buf1, 4, 4);
-			mEnemy[i].mImage->setAnimetion(2, buf2, 4, 4);
+			mEnemy[i].mImage->setAnimetion(0, nomal, 4, 4);
+			mEnemy[i].mImage->setAnimetion(1, left, 4, 4);
+			mEnemy[i].mImage->setAnimetion(2, right, 4, 4);
 			break;
 		}
 		mEnemy[i].mWidth = mEnemy[i].mImage->width();		//‰æ‘œ•
@@ -131,6 +134,10 @@ void Enemy::move(int i) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = 2;
 		}
+		if (mEnemy[i].mInTime + mEnemy[i].mMoveTime == gCount) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 0;
+		}
 		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = -2;
@@ -141,6 +148,10 @@ void Enemy::move(int i) {
 		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = 2;
+		}
+		if (mEnemy[i].mInTime + mEnemy[i].mMoveTime == gCount) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 0;
 		}
 		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
 			mEnemy[i].dx = -1;
@@ -153,6 +164,10 @@ void Enemy::move(int i) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = 2;
 		}
+		if (mEnemy[i].mInTime + mEnemy[i].mMoveTime == gCount) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 0;
+		}
 		else if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
 			mEnemy[i].dx = 1;
 			mEnemy[i].dy = 2;
@@ -161,6 +176,10 @@ void Enemy::move(int i) {
 
 	case 4:							//‰º‚ª‚Á‚Ä‚­‚é
 		if (mEnemy[i].mInTime <= gCount && gCount <= mEnemy[i].mInTime + mEnemy[i].mMoveTime) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 3;
+		}
+		if (mEnemy[i].mInTime + mEnemy[i].mStayTime == gCount) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = 3;
 		}
@@ -175,6 +194,10 @@ void Enemy::move(int i) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = 3;
 		}
+		if (mEnemy[i].mInTime + mEnemy[i].mStayTime == gCount) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 3;
+		}
 		if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
 			mEnemy[i].dx += 5 / 100.0;		//‰EŒü‚«‰Á‘¬
 			mEnemy[i].dy -= 5 / 100.0;		//Œ¸‘¬
@@ -186,8 +209,12 @@ void Enemy::move(int i) {
 			mEnemy[i].dx = 0;
 			mEnemy[i].dy = 4 * sin(1.5*gCount);
 		}
+		if (mEnemy[i].mInTime + mEnemy[i].mStayTime == gCount) {
+			mEnemy[i].dx = 0;
+			mEnemy[i].dy = 0;
+		}
 		if (mEnemy[i].mInTime + mEnemy[i].mStayTime <= gCount) {
-			mEnemy[i].dx = cos(M_PI/45*gCount);
+			mEnemy[i].dx = 4*cos(M_PI/90*gCount);
 			mEnemy[i].dy = 2;
 		}
 		break;
